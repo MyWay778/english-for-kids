@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
+    "@material-ui/core": "^4.11.4",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -15,6 +16,7 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
@@ -57,7 +59,11 @@
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.3",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
     "react-refresh": "^0.8.3",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.0.5",
@@ -79,9 +85,34 @@
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".ts",
+            ".jsx",
+            ".tsx"
+          ]
+        }
+      }
+    },
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "airbnb-typescript/base",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
     ]
   },
   "browserslist": {
@@ -152,5 +183,11 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.1"
   }
 }
