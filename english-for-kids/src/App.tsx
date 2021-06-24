@@ -1,26 +1,17 @@
-import React, { FC } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, ReactElement } from 'react';
+import { Container } from '@material-ui/core/';
+import Header from './components/header/Header';
+import AsideMenu from './components/aside-menu/AsideMenu';
+import CategoryPage from './components/category-page/CategoryPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
+const App: FC = (): ReactElement => (
+  <div className="App">
+    <Header/>
+    <AsideMenu />
+    <Container>
+      <CategoryPage/>
+    </Container>
+  </div>
+);
 export default App;
