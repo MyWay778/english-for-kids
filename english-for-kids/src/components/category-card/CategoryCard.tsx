@@ -7,10 +7,10 @@ import {
   Typography,
 } from '@material-ui/core/';
 import { useHistory } from 'react-router-dom';
-import './category-card.scss';
 import useActions from '../../hooks/useActions';
 
 interface CategoryCardProps {
+  id: number;
   title: string;
   imageSrc: string;
 }
@@ -32,11 +32,12 @@ const useStyles = makeStyles({
 });
 
 const CategoryCard: FC<CategoryCardProps> = ({
+  id,
   title,
   imageSrc,
 }): ReactElement => {
   const classes = useStyles();
-  const { changeCategory } = useActions();
+  const { changeCategory} = useActions();
   const history = useHistory();
 
   return (
@@ -44,8 +45,8 @@ const CategoryCard: FC<CategoryCardProps> = ({
       <CardActionArea
         className={classes.actionArea}
         onClick={() => {
+          changeCategory(id);
           history.push('/cards');
-          changeCategory(title);
         }}
       >
         <CardMedia

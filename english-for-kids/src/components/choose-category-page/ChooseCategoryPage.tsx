@@ -13,7 +13,7 @@ const ChooseCategoryPage: FC = (): ReactElement => {
       {categories.length !== 0 ? (
         categories.map((category) => (
           <Grid item>
-            <CategoryCard title={category.title} imageSrc={category.imageSrc} />
+            <CategoryCard id={category.id} title={category.title} imageSrc={category.imageSrc} />
           </Grid>
         ))
       ) : (

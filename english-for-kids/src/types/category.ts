@@ -1,6 +1,6 @@
 export interface CategoryState {
   categories: CategoryType[];
-  currentCategory: string | null;
+  currentCategoryId: number | null;
 }
 
 export enum CategoryActionsTypes {
@@ -9,13 +9,14 @@ export enum CategoryActionsTypes {
 }
 
 export interface CategoryType {
+  id: number;
   title: string;
   imageSrc: string;
 }
 
 interface ChangeCategoryAction {
   type: CategoryActionsTypes.CHANGE_CATEGORY;
-  payload: string;
+  payload: number;
 }
 
 interface FetchCategoriesAction {

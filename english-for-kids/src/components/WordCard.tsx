@@ -21,19 +21,21 @@ import LoopIcon from '@material-ui/icons/Loop';
 const useStyles = makeStyles({
   root: {
     position: 'relative',
-    maxWidth: 200,
+    width: '100%',
+    minWidth: 230,
     transform: 'rotateY(0)',
     transformStyle: 'preserve-3d',
     transitionDuration: '1s',
     transitionProperty: 'transform',
   },
   img: {
-    height: 100,
+    height: 170,
   },
   content: {
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
+    height: 35,
     padding: 16,
     '&:last-child': {
       paddingBottom: 16,
@@ -53,7 +55,6 @@ const useStyles = makeStyles({
   back: {
     position: 'absolute',
     width: '100%',
-    height: 64,
     bottom: 0,
     transform: 'rotateY(180deg)',
     backfaceVisibility: 'hidden',

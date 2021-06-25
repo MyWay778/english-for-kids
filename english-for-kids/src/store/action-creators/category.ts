@@ -3,9 +3,9 @@ import { fetchCategoriesFromApi } from '../../mock-api/mock-api';
 import { CategoryActions, CategoryActionsTypes } from '../../types/category';
 
 export const changeCategory =
-  (category: string) =>
+  (categoryId: number) =>
   (dispatch: Dispatch<CategoryActions>): void => {
-    dispatch({ type: CategoryActionsTypes.CHANGE_CATEGORY, payload: category });
+    dispatch({ type: CategoryActionsTypes.CHANGE_CATEGORY, payload: categoryId });
   };
 
 export const fetchCategories =

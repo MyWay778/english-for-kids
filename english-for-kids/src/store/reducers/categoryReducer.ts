@@ -6,7 +6,7 @@ import {
 
 const initialState: CategoryState = {
   categories: [],
-  currentCategory: null,
+  currentCategoryId: null,
 };
 
 const categoryReducer = (
@@ -15,7 +15,7 @@ const categoryReducer = (
 ): CategoryState => {
   switch (action.type) {
     case CategoryActionsTypes.CHANGE_CATEGORY:
-      return { ...state, currentCategory: action.payload };
+      return { ...state, currentCategoryId: action.payload };
     case CategoryActionsTypes.FETCH_CATEGORIES: 
       return {...state, categories: action.payload}
     default:
