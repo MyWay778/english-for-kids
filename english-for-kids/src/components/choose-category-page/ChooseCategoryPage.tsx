@@ -1,17 +1,26 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import { FC, ReactElement } from 'react';
+import useTypedSelector from '../../hooks/useTypedSelector';
 import CategoryCard from '../category-card/CategoryCard';
 
 const useStyles = makeStyles({});
 
-const ChooseCategoryPage: FC = (): ReactElement => (
-  <Grid container justify="center">
-    <Grid item lg={10}>
-      <Grid justify="space-around" container>
-        <CategoryCard />
-      </Grid>
+const ChooseCategoryPage: FC = (): ReactElement => {
+  const { categories } = useTypedSelector((state) => state.category);
+
+  return (
+    <Grid container justify="center" spacing={5}>
+      {categories.length !== 0 ? (
+        categories.map((category) => (
+          <Grid item>
+            <CategoryCard title={category.title} imageSrc={category.imageSrc} />
+          </Grid>
+        ))
+      ) : (
+        <p>No categories</p>
+      )}
     </Grid>
-  </Grid>
-);
+  );
+};
 
 export default ChooseCategoryPage;

@@ -1,17 +1,24 @@
 import { Dispatch } from 'react';
-import {
-  CategoriesType,
-  CategoryActions,
-  CategoryActionsTypes,
-} from '../../types/category';
+import { fetchCategoriesFromApi } from '../../mock-api/mock-api';
+import { CategoryActions, CategoryActionsTypes } from '../../types/category';
 
-// eslint-disable-next-line import/prefer-default-export
 export const changeCategory =
-  (category: CategoriesType) =>
+  (category: string) =>
   (dispatch: Dispatch<CategoryActions>): void => {
     dispatch({ type: CategoryActionsTypes.CHANGE_CATEGORY, payload: category });
   };
 
+export const fetchCategories =
+  () =>
+  (dispatch: Dispatch<CategoryActions>): void => {
+    const categories = fetchCategoriesFromApi();
+    dispatch({
+      type: CategoryActionsTypes.FETCH_CATEGORIES,
+      payload: categories,
+    });
+  };
+
 export const CategoryActionsCreator = {
   changeCategory,
+  fetchCategories,
 };

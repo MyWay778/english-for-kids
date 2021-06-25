@@ -1,17 +1,26 @@
 export interface CategoryState {
-  categories: CategoriesType[];
-  currentCategory: CategoriesType | null;
+  categories: CategoryType[];
+  currentCategory: string | null;
 }
-
-export type CategoriesType = 'animal';
 
 export enum CategoryActionsTypes {
   CHANGE_CATEGORY = 'CHANGE_CATEGORY',
+  FETCH_CATEGORIES = 'FETCH_CATEGORIES',
+}
+
+export interface CategoryType {
+  title: string;
+  imageSrc: string;
 }
 
 interface ChangeCategoryAction {
   type: CategoryActionsTypes.CHANGE_CATEGORY;
-  payload: CategoriesType;
+  payload: string;
 }
 
-export type CategoryActions = ChangeCategoryAction;
+interface FetchCategoriesAction {
+  type: CategoryActionsTypes.FETCH_CATEGORIES;
+  payload: CategoryType[];
+}
+
+export type CategoryActions = ChangeCategoryAction | FetchCategoriesAction;

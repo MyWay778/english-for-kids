@@ -16,6 +16,8 @@ const categoryReducer = (
   switch (action.type) {
     case CategoryActionsTypes.CHANGE_CATEGORY:
       return { ...state, currentCategory: action.payload };
+    case CategoryActionsTypes.FETCH_CATEGORIES: 
+      return {...state, categories: action.payload}
     default:
       return state;
   }
