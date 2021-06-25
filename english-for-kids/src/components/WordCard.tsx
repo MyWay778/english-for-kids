@@ -1,8 +1,15 @@
-import { FC, ReactElement } from 'react';
+import {
+  FC,
+  ReactElement,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 import {
-  Box,
   Card,
+  CardActionArea,
   CardContent,
   CardMedia,
   IconButton,
@@ -18,7 +25,7 @@ const useStyles = makeStyles({
     transform: 'rotateY(0)',
     transformStyle: 'preserve-3d',
     transitionDuration: '1s',
-    transitionProperty: 'transform'
+    transitionProperty: 'transform',
   },
   img: {
     height: 100,
@@ -38,8 +45,7 @@ const useStyles = makeStyles({
   flipBtn: {
     position: 'absolute',
     right: 0,
-    top: '50%',
-    transform: 'translateY(-50%)',
+    bottom: '7px',
   },
   flipped: {
     transform: 'rotateY(180deg)',
@@ -58,26 +64,65 @@ interface WordCardProps {
   imgSource: string;
   wordText: string;
   translatedWordText: string;
+  listenSource: string;
 }
 
 const WordCard: FC<WordCardProps> = ({
   imgSource,
   wordText,
   translatedWordText,
+  listenSource,
 }): ReactElement => {
   const classes = useStyles();
+  const [flippedState, setFlippedState] = useState(false);
+  const cardContainer = useRef<HTMLDivElement>(null);
+
+  const loopButtonHandler = (): void => {
+    setFlippedState(true);
+    if (cardContainer.current) {
+      const leaveHandler = () => {
+        setTimeout(() => {
+          setFlippedState(false);
+        }, 1000);
+        cardContainer.current?.removeEventListener('mouseleave', leaveHandler);
+      };
+      cardContainer.current.addEventListener('mouseleave', leaveHandler);
+    }
+  };
+
+  const clickOnFrontHandler = () => {
+    if (listenSource) {
+      const audio = new Audio(listenSource);
+      audio.volume = 0.2;
+      audio.play();
+    }
+  };
+
   return (
-    <Box className={`${classes.root} ${classes.flipped}`}>
+    <div
+      className={clsx(classes.root, flippedState && classes.flipped)}
+      ref={cardContainer}
+    >
       <Card>
-        <CardMedia className={classes.img} image={imgSource} title={wordText} />
-        <CardContent className={classes.content}>
-          <Typography className={classes.text} variant="h5">
-            {wordText}
-          </Typography>
-          <IconButton className={classes.flipBtn}>
-            <LoopIcon />
-          </IconButton>
-        </CardContent>
+        <CardActionArea onClick={clickOnFrontHandler} disabled={flippedState}>
+          <CardMedia
+            className={classes.img}
+            image={imgSource}
+            title={wordText}
+          />
+          <CardContent className={classes.content}>
+            <Typography className={classes.text} variant="h5">
+              {wordText}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <IconButton
+          className={classes.flipBtn}
+          onClick={loopButtonHandler}
+          disabled={flippedState}
+        >
+          <LoopIcon />
+        </IconButton>
       </Card>
       <Card className={classes.back}>
         <CardContent className={classes.content}>
@@ -86,7 +131,7 @@ const WordCard: FC<WordCardProps> = ({
           </Typography>
         </CardContent>
       </Card>
-    </Box>
+    </div>
   );
 };
 

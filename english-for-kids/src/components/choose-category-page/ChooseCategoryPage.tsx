@@ -1,18 +1,13 @@
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { FC, ReactElement } from 'react';
 import CategoryCard from '../category-card/CategoryCard';
-import './category-card-container.scss';
+
+const useStyles = makeStyles({});
 
 const ChooseCategoryPage: FC = (): ReactElement => (
-  <Grid className="category-card-container" container justify="center">
+  <Grid container justify="center">
     <Grid item lg={10}>
-      <Grid
-        className="category-card-container__inner"
-        justify="space-around"
-        container
-      >
-        <CategoryCard />
-        <CategoryCard />
+      <Grid justify="space-around" container>
         <CategoryCard />
       </Grid>
     </Grid>
