@@ -1,11 +1,4 @@
-import {
-  FC,
-  ReactElement,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { FC, ReactElement, useRef, useState } from 'react';
 import clsx from 'clsx';
 import {
   Card,
@@ -28,8 +21,22 @@ const useStyles = makeStyles({
     transitionDuration: '1s',
     transitionProperty: 'transform',
   },
+  card: {
+    height: 237,
+  },
+  actionArea: {
+    height: '100%',
+  },
   img: {
+    width: '100%',
     height: 170,
+    transition: 'height',
+    transitionDuration: '0.8s',
+  },
+  fullModeImg: {
+    position: 'absolute',
+    top: 0,
+    height: '100%',
   },
   content: {
     position: 'relative',
@@ -59,20 +66,34 @@ const useStyles = makeStyles({
     transform: 'rotateY(180deg)',
     backfaceVisibility: 'hidden',
   },
+  hidden: {
+    opacity: 0,
+    visibility: 'hidden',
+  },
 });
 
 interface WordCardProps {
+  id: number;
   imgSource: string;
   wordText: string;
   translatedWordText: string;
   listenSource: string;
+  isGameMode: boolean;
+  disabled: boolean;
+  gameClickHandler: GameClickHandlerType;
 }
 
+export type GameClickHandlerType = (cardId: number) => void;
+
 const WordCard: FC<WordCardProps> = ({
+  id,
   imgSource,
   wordText,
   translatedWordText,
   listenSource,
+  isGameMode,
+  disabled,
+  gameClickHandler,
 }): ReactElement => {
   const classes = useStyles();
   const [flippedState, setFlippedState] = useState(false);
@@ -91,6 +112,10 @@ const WordCard: FC<WordCardProps> = ({
     }
   };
 
+  const clickOnFrontInGameModeHandler = () => {
+    gameClickHandler(id);
+  };
+
   const clickOnFrontHandler = () => {
     if (listenSource) {
       const audio = new Audio(listenSource);
@@ -104,21 +129,29 @@ const WordCard: FC<WordCardProps> = ({
       className={clsx(classes.root, flippedState && classes.flipped)}
       ref={cardContainer}
     >
-      <Card>
-        <CardActionArea onClick={clickOnFrontHandler} disabled={flippedState}>
+      <Card className={classes.card}>
+        <CardActionArea
+          className={classes.actionArea}
+          onClick={
+            isGameMode ? clickOnFrontInGameModeHandler : clickOnFrontHandler
+          }
+          disabled={flippedState || disabled}
+        >
           <CardMedia
-            className={classes.img}
+            className={clsx(classes.img, isGameMode && classes.fullModeImg)}
             image={imgSource}
             title={wordText}
           />
-          <CardContent className={classes.content}>
+          <CardContent
+            className={clsx(classes.content, isGameMode && classes.hidden)}
+          >
             <Typography className={classes.text} variant="h5">
               {wordText}
             </Typography>
           </CardContent>
         </CardActionArea>
         <IconButton
-          className={classes.flipBtn}
+          className={clsx(classes.flipBtn, isGameMode && classes.hidden)}
           onClick={loopButtonHandler}
           disabled={flippedState}
         >

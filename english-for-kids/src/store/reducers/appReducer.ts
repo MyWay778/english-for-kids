@@ -6,6 +6,7 @@ import {
 
 const initialState: AppState = {
   openedAsideMenu: false,
+  gameMode: false,
 };
 
 const appReducer = (
@@ -22,6 +23,11 @@ const appReducer = (
       return {
         ...state,
         openedAsideMenu: false,
+      };
+    case AppStateActionTypes.SET_GAME_MODE:
+      return {
+        ...state,
+        gameMode: action.payload,
       };
     default:
       return state;

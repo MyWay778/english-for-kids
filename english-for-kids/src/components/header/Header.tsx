@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core/';
 import MenuIcon from '@material-ui/icons/Menu';
 import useActions from '../../hooks/useActions';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header: FC = (): ReactElement => {
   const classes = useStyles();
-  const { openAsideMenu } = useActions();
+  const { openAsideMenu, setGameMode } = useActions();
+  const { gameMode } = useTypedSelector((state) => state.app);
+
+  const switchGameModeHandler = (): void => {
+    setGameMode(!gameMode);
+  };
 
   return (
     <AppBar className={classes.root} position="static">
@@ -46,7 +52,7 @@ const Header: FC = (): ReactElement => {
         </Typography>
         <FormControlLabel
           className={classes.gameModeControl}
-          control={<Switch />}
+          control={<Switch onChange={switchGameModeHandler} checked={gameMode} />}
           label="Game mode"
           labelPlacement="start"
         />

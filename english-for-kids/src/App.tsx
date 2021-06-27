@@ -6,6 +6,7 @@ import AsideMenu from './components/aside-menu/AsideMenu';
 import ChooseCategoryPage from './components/choose-category-page/ChooseCategoryPage';
 import CardsPage from './components/cards-page/CardsPage';
 import useActions from './hooks/useActions';
+import GameResultPage from './components/game-result-page/GameResultPage';
 
 const App: FC = (): ReactElement => {
   const { fetchCategories } = useActions();
@@ -26,6 +27,9 @@ const App: FC = (): ReactElement => {
             </Route>
             <Route exact path="/cards">
               <CardsPage />
+            </Route>
+            <Route exact path="/result">
+              <GameResultPage />
             </Route>
           </Switch>
         </Container>
