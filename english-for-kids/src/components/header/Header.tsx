@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import {
   AppBar,
   IconButton,
@@ -10,6 +10,7 @@ import {
   Switch,
   FormControlLabel,
 } from '@material-ui/core/';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme: Theme) =>
     gameModeControl: {
       marginLeft: theme.spacing(10),
     },
+    logo: {
+      color: '#fff',
+      textDecoration: 'none'
+    }
   })
 );
 
@@ -32,6 +37,8 @@ const Header: FC = (): ReactElement => {
   const classes = useStyles();
   const { openAsideMenu, setGameMode } = useActions();
   const { gameMode } = useTypedSelector((state) => state.app);
+
+  const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
   const switchGameModeHandler = (): void => {
     setGameMode(!gameMode);
@@ -47,12 +54,14 @@ const Header: FC = (): ReactElement => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography className="header__heading" variant="h6">
-          English for kids
+        <Typography className="header__heading" component="h1" variant="h6">
+          <Link className={classes.logo} to="/">English for kids</Link>
         </Typography>
         <FormControlLabel
           className={classes.gameModeControl}
-          control={<Switch onChange={switchGameModeHandler} checked={gameMode} />}
+          control={
+            <Switch onChange={switchGameModeHandler} checked={gameMode} />
+          }
           label="Game mode"
           labelPlacement="start"
         />

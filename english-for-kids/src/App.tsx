@@ -25,7 +25,7 @@ const App: FC = (): ReactElement => {
             <Route exact path="/">
               <ChooseCategoryPage />
             </Route>
-            <Route exact path="/cards">
+            <Route path="/cards/:id">
               <CardsPage />
             </Route>
             <Route exact path="/result">

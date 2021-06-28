@@ -5,10 +5,14 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemAvatar,
   makeStyles,
+  Avatar,
 } from '@material-ui/core';
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
 
@@ -20,18 +24,50 @@ const useStyles = makeStyles({
     width: 250,
   },
   item: {
-    textAlign: 'center',
+    paddingLeft: 35,
+  },
+  itemAvatar: {
+    minWidth: 65,
+  },
+  itemText: {
+    fontWeight: 600,
   },
   buttonBox: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  active: {
+    color: '#f50057',
+  },
 });
+
+const categoryTitleSplitter = (categoryTitle: string): string[] => {
+  const indexOfBoundary = categoryTitle.indexOf(' ');
+  if (indexOfBoundary === -1) {
+    return [categoryTitle, ''];
+  }
+  const primary = categoryTitle.substring(0, indexOfBoundary);
+  const secondary = categoryTitle.substring(indexOfBoundary + 1);
+
+  return [primary, secondary];
+};
 
 const AsideMenu: FC = (): ReactElement => {
   const classes = useStyles();
-  const { openedAsideMenu } = useTypedSelector((state) => state.app);
+  const { openedAsideMenu, categories } = useTypedSelector((state) => ({
+    ...state.app,
+    ...state.category,
+  }));
   const { closeAsideMenu } = useActions();
+  const history = useHistory();
+
+  const [activeLink, setActiveLink] = useState<number | null>(null);
+
+  const makeCategoryItemClickHandler = (id: number) => (): void => {
+    history.push(`/cards/${id}`);
+    setActiveLink(id);
+    closeAsideMenu();
+  };
 
   return (
     <Drawer open={openedAsideMenu} onClose={closeAsideMenu}>
@@ -40,10 +76,30 @@ const AsideMenu: FC = (): ReactElement => {
           <CloseIcon />
         </IconButton>
       </Box>
-      <List className={classes.list}>
-        <ListItem className={classes.item} button>
-          <ListItemText primary="Animals" />
-        </ListItem>
+      <List component="nav" className={classes.list}>
+        {categories.map((cat) => {
+          const [primary, secondary] = categoryTitleSplitter(cat.title);
+          return (
+            <ListItem
+              key={cat.id}
+              className={clsx(
+                classes.item,
+                cat.id === activeLink && classes.active
+              )}
+              button
+              onClick={makeCategoryItemClickHandler(cat.id)}
+            >
+              <ListItemAvatar className={classes.itemAvatar}>
+                <Avatar alt="ddd" src={cat.imageSrc} />
+              </ListItemAvatar>
+              <ListItemText
+                classes={{ primary: classes.itemText }}
+                primary={primary}
+                secondary={secondary}
+              />
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );

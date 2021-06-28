@@ -2,7 +2,7 @@ import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { Star } from '@material-ui/icons';
 import clsx from 'clsx';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import WordCard, { GameClickHandlerType } from '../WordCard';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
@@ -29,6 +29,8 @@ const useStyles = makeStyles({
   gameProgressBox: {
     display: 'flex',
     justifyContent: 'flex-end',
+    height:50,
+    marginBottom: 25
   },
 });
 
@@ -46,15 +48,19 @@ interface UserAnswerType {
   type: 'right' | 'wrong';
 }
 
+interface CardsParams {
+  id?: string
+}
+
 const CardsPage: FC = (): ReactElement => {
   const classes = useStyles();
-  const { currentCategoryId, cards, gameMode } = useTypedSelector((state) => ({
-    ...state.category,
+  const { cards, gameMode } = useTypedSelector((state) => ({
     ...state.cards,
     ...state.app,
   }));
   const { fetchCards, setGameResult, setGameMode } = useActions();
   const history = useHistory();
+  const idFromParams = useParams<CardsParams>()?.id;
 
   const [shuffledCards, setShuffledCards] = useState<CardType[]>([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -63,8 +69,8 @@ const CardsPage: FC = (): ReactElement => {
   const [disabledCards, setDisabledCards] = useState<number[]>([]);
 
   useEffect(() => {
-    if (currentCategoryId) {
-      fetchCards(currentCategoryId);
+    if (idFromParams) {
+      fetchCards(Number(idFromParams));
     }
   }, []);
 
@@ -99,7 +105,6 @@ const CardsPage: FC = (): ReactElement => {
     const wrongAnswersNumber = userAnswers.filter(
       (answer) => answer.type === 'wrong'
     ).length;
-    console.log(wrongAnswersNumber);
     if (wrongAnswersNumber > 3) {
       finishGame();
     }
@@ -122,7 +127,6 @@ const CardsPage: FC = (): ReactElement => {
       return;
     }
     if (cardId === shuffledCards[0].id) {
-      console.log('Right!');
       setDisabledCards((disabledCardsState) =>
         disabledCardsState.concat(cardId)
       );
@@ -169,7 +173,7 @@ const CardsPage: FC = (): ReactElement => {
         container
         spacing={3}
       >
-        {currentCategoryId ? (
+        {idFromParams ? (
           cards.map((card) => (
             <Grid item key={card.id} lg={3} md={3}>
               <WordCard

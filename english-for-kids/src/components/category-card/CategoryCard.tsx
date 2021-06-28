@@ -46,7 +46,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
         className={classes.actionArea}
         onClick={() => {
           changeCategory(id);
-          history.push('/cards');
+          history.push(`/cards/${id}`);
         }}
       >
         <CardMedia
