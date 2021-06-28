@@ -30,7 +30,10 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'flex-end',
     height:50,
-    marginBottom: 25
+    marginBottom: 25,
+    maxWidth: 1200,
+    marginLeft: 'auto',
+    overflow: 'hidden'
   },
 });
 
@@ -102,10 +105,7 @@ const CardsPage: FC = (): ReactElement => {
   };
 
   useEffect(() => {
-    const wrongAnswersNumber = userAnswers.filter(
-      (answer) => answer.type === 'wrong'
-    ).length;
-    if (wrongAnswersNumber > 3) {
+    if (userAnswers.length > 30) {
       finishGame();
     }
   }, [userAnswers]);
@@ -131,9 +131,7 @@ const CardsPage: FC = (): ReactElement => {
         disabledCardsState.concat(cardId)
       );
       setUserAnswers(
-        (
-          [{ id: userAnswers.length, type: 'right' }] as UserAnswerType[]
-        ).concat(userAnswers)
+        userAnswers.concat({ id: userAnswers.length, type: 'right' })
       );
       if (shuffledCards.length === 1) {
         finishGame();
@@ -141,12 +139,9 @@ const CardsPage: FC = (): ReactElement => {
       }
       playSound(shuffledCards[1]);
       setShuffledCards(shuffledCards.slice(1));
-      
     } else {
       setUserAnswers(
-        (
-          [{ id: userAnswers.length, type: 'wrong' }] as UserAnswerType[]
-        ).concat(userAnswers)
+        userAnswers.concat({ id: userAnswers.length, type: 'wrong' })
       );
     }
   };
