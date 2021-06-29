@@ -1,125 +1,69 @@
-import {
-  Box,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  makeStyles,
-  Avatar,
-  ListSubheader,
-  Divider,
-  ListItemIcon,
-} from '@material-ui/core';
-import { FC, ReactElement, useState } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import HomeIcon from '@material-ui/icons/Home';
-import { useHistory } from 'react-router-dom';
+import { FC, ReactElement} from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
-
-const useStyles = makeStyles({
-  root: {
-    width: 250,
-  },
-  list: {
-    width: 250,
-  },
-  item: {
-    paddingLeft: 35,
-  },
-  itemAvatar: {
-    minWidth: 65,
-  },
-  itemText: {
-    fontWeight: 600,
-  },
-  buttonBox: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  active: {
-    color: '#f50057',
-  },
-});
-
-const categoryTitleSplitter = (categoryTitle: string): string[] => {
-  const indexOfBoundary = categoryTitle.indexOf(' ');
-  if (indexOfBoundary === -1) {
-    return [categoryTitle, ''];
-  }
-  const primary = categoryTitle.substring(0, indexOfBoundary);
-  const secondary = categoryTitle.substring(indexOfBoundary + 1);
-
-  return [primary, secondary];
-};
+import './aside-menu.scss';
+import homeIcon from '../../static/icon/home.svg';
 
 const AsideMenu: FC = (): ReactElement => {
-  const classes = useStyles();
   const { openedAsideMenu, categories } = useTypedSelector((state) => ({
     ...state.app,
     ...state.category,
   }));
   const { closeAsideMenu } = useActions();
-  const history = useHistory();
 
-  const [activeLink, setActiveLink] = useState<number | null>(null);
-
-  const makeCategoryItemClickHandler = (id: number) => (): void => {
-    history.push(`/cards/${id}`);
-    setActiveLink(id);
-    closeAsideMenu();
+  const navClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (
+      target.localName === 'a' ||
+      target.parentElement?.localName === 'a' ||
+      target.classList.contains('side-menu__close')
+    ) {
+      closeAsideMenu();
+    }
   };
 
   return (
-    <Drawer open={openedAsideMenu} onClose={closeAsideMenu}>
-      <Box className={classes.buttonBox}>
-        <IconButton onClick={closeAsideMenu}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <List component="nav" className={classes.list}>
-        <ListItem button>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Home</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Statistic</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Login</ListItemText>
-        </ListItem>
-        <Divider />
-        <ListSubheader>Categories</ListSubheader>
-        {categories.map((cat) => {
-          const [primary, secondary] = categoryTitleSplitter(cat.title);
-          return (
-            <ListItem
-              key={cat.id}
-              className={clsx(
-                classes.item,
-                cat.id === activeLink && classes.active
-              )}
-              button
-              onClick={makeCategoryItemClickHandler(cat.id)}
-            >
-              <ListItemAvatar className={classes.itemAvatar}>
-                <Avatar alt="ddd" src={cat.imageSrc} />
-              </ListItemAvatar>
-              <ListItemText
-                classes={{ primary: classes.itemText }}
-                primary={primary}
-                secondary={secondary}
-              />
-            </ListItem>
-          );
-        })}
-      </List>
-    </Drawer>
+    <>
+      <nav
+        className={clsx('side-menu', openedAsideMenu && 'side-menu_open')}
+        onClick={navClickHandler}
+      >
+        <button className="side-menu__close"></button>
+        <ul className="nav-menu">
+          <li>
+            <Link className="nav-menu__link" to="/">
+              <img className="nav-menu__icon" src={homeIcon} alt="Home" />
+              <span className="categories-nav__title">Home</span>
+            </Link>
+          </li>
+        </ul>
+        <hr className="side-menu__divider" />
+        <ul className="categories-nav">
+          {categories.map((cat) => (
+            <li key={cat.id}>
+              <NavLink
+                className="categories-nav__link"
+                activeClassName="categories-nav__link_active"
+                to={`/cards/${cat.id}`}
+              >
+                <img
+                  className="categories-nav__avatar"
+                  src={cat.imageSrc}
+                  alt={cat.title}
+                />
+                <span className="categories-nav__title">{cat.title}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div
+        className={clsx('backdrop', openedAsideMenu && 'backdrop_shown')}
+        onClick={closeAsideMenu}
+      ></div>
+    </>
   );
 };
 
