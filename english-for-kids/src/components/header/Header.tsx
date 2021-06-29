@@ -1,72 +1,40 @@
-import React, { FC, ReactElement } from 'react';
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  Switch,
-  FormControlLabel,
-} from '@material-ui/core/';
+import{ FC, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import MenuIcon from '@material-ui/icons/Menu';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginBottom: theme.spacing(10),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    gameModeControl: {
-      marginLeft: theme.spacing(10),
-    },
-    logo: {
-      color: '#fff',
-      textDecoration: 'none'
-    }
-  })
-);
+import './header.scss';
 
 const Header: FC = (): ReactElement => {
-  const classes = useStyles();
   const { openAsideMenu, setGameMode } = useActions();
   const { gameMode } = useTypedSelector((state) => state.app);
-
-  const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
   const switchGameModeHandler = (): void => {
     setGameMode(!gameMode);
   };
 
   return (
-    <AppBar className={classes.root} position="static">
-      <Toolbar>
-        <IconButton
-          className={classes.menuButton}
-          edge="start"
-          onClick={openAsideMenu}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography className="header__heading" component="h1" variant="h6">
-          <Link className={classes.logo} to="/">English for kids</Link>
-        </Typography>
-        <FormControlLabel
-          className={classes.gameModeControl}
-          control={
-            <Switch onChange={switchGameModeHandler} checked={gameMode} />
-          }
-          label="Game mode"
-          labelPlacement="start"
-        />
-      </Toolbar>
-    </AppBar>
+    <header className="header">
+      <button
+        className="header__menu-button"
+        onClick={openAsideMenu}
+      />
+      <h1 className="header-logo">
+        <Link className="header-logo__link" to="/">
+          English <span className="header-logo__preposition">for</span>{' '}
+          <span className="header-logo__first-color">k</span>
+          <span className="header-logo__second-color">i</span>
+          <span className="header-logo__third-color">d</span>
+          <span className="header-logo__four-color">s</span>
+        </Link>
+      </h1>
+      <label className="play-toggle">
+        <input className="play-toggle__checkbox" type="checkbox" onChange={switchGameModeHandler} checked={gameMode}/>
+        <span className="play-toggle__toggle-thumb">
+          <span className="play-toggle__title play-toggle__title_off">Play</span>
+          <span className="play-toggle__title play-toggle__title_on">Train</span>
+        </span>
+      </label>
+    </header>
   );
 };
 

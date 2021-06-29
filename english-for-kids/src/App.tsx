@@ -7,6 +7,8 @@ import ChooseCategoryPage from './components/choose-category-page/ChooseCategory
 import CardsPage from './components/cards-page/CardsPage';
 import useActions from './hooks/useActions';
 import GameResultPage from './components/game-result-page/GameResultPage';
+import './styles/app.scss';
+
 
 const App: FC = (): ReactElement => {
   const { fetchCategories } = useActions();

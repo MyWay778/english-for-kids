@@ -8,9 +8,13 @@ import {
   ListItemAvatar,
   makeStyles,
   Avatar,
+  ListSubheader,
+  Divider,
+  ListItemIcon,
 } from '@material-ui/core';
 import { FC, ReactElement, useState } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import HomeIcon from '@material-ui/icons/Home';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import useTypedSelector from '../../hooks/useTypedSelector';
@@ -77,6 +81,20 @@ const AsideMenu: FC = (): ReactElement => {
         </IconButton>
       </Box>
       <List component="nav" className={classes.list}>
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>Statistic</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>Login</ListItemText>
+        </ListItem>
+        <Divider />
+        <ListSubheader>Categories</ListSubheader>
         {categories.map((cat) => {
           const [primary, secondary] = categoryTitleSplitter(cat.title);
           return (
