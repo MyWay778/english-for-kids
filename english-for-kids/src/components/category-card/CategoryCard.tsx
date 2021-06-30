@@ -1,13 +1,6 @@
 import { FC, ReactElement } from 'react';
-import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  makeStyles,
-  Typography,
-} from '@material-ui/core/';
-import { useHistory } from 'react-router-dom';
-import useActions from '../../hooks/useActions';
+import { Link } from 'react-router-dom';
+import './category-card.scss';
 
 interface CategoryCardProps {
   id: number;
@@ -15,56 +8,19 @@ interface CategoryCardProps {
   imageSrc: string;
 }
 
-const useStyles = makeStyles({
-  root: {
-    width: 300,
-    height: 200
-  },
-  heading: {
-    padding: '15px 0'
-  },
-  media: {
-    height: 140
-  },
-  actionArea: {
-    height: '100%'
-  }
-});
-
 const CategoryCard: FC<CategoryCardProps> = ({
   id,
   title,
   imageSrc,
-}): ReactElement => {
-  const classes = useStyles();
-  const { changeCategory} = useActions();
-  const history = useHistory();
-
-  return (
-    <Card className={classes.root}>
-      <CardActionArea
-        className={classes.actionArea}
-        onClick={() => {
-          changeCategory(id);
-          history.push(`/cards/${id}`);
-        }}
-      >
-        <CardMedia
-          className={classes.media}
-          image={imageSrc}
-          title={title}
-        />
-        <Typography
-          className={classes.heading}
-          align="center"
-          color="textPrimary"
-          variant="h5"
-        >
-          {title}
-        </Typography>
-      </CardActionArea>
-    </Card>
-  );
-};
+}): ReactElement => (
+  <div className="category-card">
+    <Link className="category-card__action-area" to={`/cards/${id}`}>
+      <div className="category-card__media">
+        <img className="category-card__avatar" src={imageSrc} alt={title} />
+      </div>
+      <h4 className="category-card__title">{title}</h4>
+    </Link>
+  </div>
+);
 
 export default CategoryCard;
