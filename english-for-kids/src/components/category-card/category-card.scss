@@ -11,7 +11,6 @@
     box-shadow: 0 3px 12px -2px rgb(0 0 0 / 50%);
     transform: translateY(-8px);
   }
-
 }
 
 .category-card__action-area {
@@ -35,6 +34,16 @@
     rgba(0, 212, 255, 1) 0%,
     rgba(8, 220, 111, 1) 100%
   );
+  transition: all 0.6s ease-in;
+
+  &_game-mode {
+    background: linear-gradient(
+      17deg,
+      rgba(175, 0, 255, 1) 0%,
+      rgba(255, 85, 0, 1) 100%
+    );
+    background-position: 300px;
+  }
 }
 
 .category-card__avatar {

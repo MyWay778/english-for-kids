@@ -1,21 +1,11 @@
-import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { FC } from 'react';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import thumbUpImage from '../../static/images/emoji/thumbs-up.webp';
 import gladImage from '../../static/images/emoji/glad.webp';
 import sadImage from '../../static/images/emoji/sad.webp';
-
-const useStyles = makeStyles({
-  container: {
-    rowGap: 15,
-  },
-  image: {
-    marginTop: 30,
-  },
-});
+import './game-result-page.scss';
 
 const GameResultPage: FC = () => {
-  const classes = useStyles();
   const { gameResult } = useTypedSelector((state) => state.game);
 
   if (!gameResult) {
@@ -43,20 +33,15 @@ const GameResultPage: FC = () => {
   }
 
   return (
-    <Grid
-      container
-      className={classes.container}
-      direction="column"
-      alignItems="center"
-    >
-      <Typography color="secondary" variant="h2">
-        {congratulationsMessage}
-      </Typography>
-      <Typography color="primary" variant="h4">
+    <div className="game-result">
+        <h2 className="game-result__primary">
+          {congratulationsMessage}
+        </h2>
+        <h4 className="game-result__secondary">
         {mistakesMessage}
-      </Typography>
-      <img className={classes.image} src={resultImage} alt="win image" />
-    </Grid>
+        </h4>
+        <img className="game-result__image" src={resultImage} alt="win image" />
+    </div>
   );
 };
 

@@ -1,0 +1,26 @@
+.game-progress-bar {
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+  overflow: hidden;
+  padding: 0 30px;
+
+  & > svg {
+    flex-shrink: 0;
+  }
+}
+
+.game-cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 25px;
+  row-gap: 25px;
+  perspective: 1000px;
+}
+
+.game-control-wrapper {
+  margin-top: 40px;
+  height: 60px;
+}

@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/header/Header';
 import AsideMenu from './components/aside-menu/AsideMenu';
 import ChooseCategoryPage from './components/choose-category-page/ChooseCategoryPage';
-import CardsPage from './components/cards-page/CardsPage';
+import GamePage from './components/game-page/GamePage';
 import useActions from './hooks/useActions';
 import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
@@ -25,7 +25,7 @@ const App: FC = (): ReactElement => {
             <ChooseCategoryPage />
           </Route>
           <Route path="/cards/:id">
-            <CardsPage />
+            <GamePage />
           </Route>
           <Route exact path="/result">
             <GameResultPage />

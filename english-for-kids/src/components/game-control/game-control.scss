@@ -1,0 +1,55 @@
+.game-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-control__start {
+  width: 250px;
+  height: 60px;
+  background: linear-gradient(
+    17deg,
+    rgba(175, 0, 255, 1) 0%,
+    rgba(255, 85, 0, 1) 100%
+  );
+  background-size: 1px 250px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease-in;
+  box-shadow: 0 0 10px 0px #ff5500;
+
+  &:hover {
+    box-shadow: 0 0 0px 0px #ff5500, inset 1px 0px 20px -5px rgba(0, 0, 0, 0.2),
+      inset -1px 0px 20px -5px rgba(0, 0, 0, 0.2), inset 0px 1px 20px -5px rgba(0, 0, 0, 0.2),
+      inset 0px -1px 20px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  &_heighlight {
+    background-position: 100px;
+    box-shadow: 0 0 15px 0px #af00ff;
+  }
+}
+
+.game-control__repeat {
+  width: 60px;
+  height: 60px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  will-change: transform;
+  transition: transform 0.2s ease-in;
+  box-shadow: 0 0px 6px 0px rgb(0 0 0 / 50%);
+  border-radius: 50%;
+
+  &:hover  {
+    transform: rotate(15deg);
+  }
+}
+

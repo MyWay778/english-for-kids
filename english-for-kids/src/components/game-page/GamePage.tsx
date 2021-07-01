@@ -1,41 +1,13 @@
-import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { FC, ReactElement, useEffect, useState } from 'react';
-import { Star } from '@material-ui/icons';
-import clsx from 'clsx';
 import { useHistory, useParams } from 'react-router-dom';
-import WordCard, { GameClickHandlerType } from '../WordCard';
+import GameCard, { GameClickHandlerType } from '../game-card/game-card';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
 import { CardType } from '../../types/cards';
+import Star from '../icons/Star';
+import './game-page.scss';
+import GameControl from '../game-control/GameControl';
 
-const useStyles = makeStyles({
-  star: {
-    width: 50,
-    height: 50,
-  },
-  goldStar: {
-    fill: 'gold',
-  },
-  outlinedStar: {
-    fill: 'white',
-    stroke: 'black',
-  },
-  container: {
-    perspective: 1000,
-  },
-  highlight: {
-    boxShadow: '0 0 17px 10px pink',
-  },
-  gameProgressBox: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    height:50,
-    marginBottom: 25,
-    maxWidth: 1200,
-    marginLeft: 'auto',
-    overflow: 'hidden'
-  },
-});
 
 const shuffleCards = (cards: CardType[]): CardType[] =>
   cards.concat().sort(() => Math.random() - 0.5);
@@ -52,11 +24,10 @@ interface UserAnswerType {
 }
 
 interface CardsParams {
-  id?: string
+  id?: string;
 }
 
-const CardsPage: FC = (): ReactElement => {
-  const classes = useStyles();
+const GamePage: FC = (): ReactElement => {
   const { cards, gameMode } = useTypedSelector((state) => ({
     ...state.cards,
     ...state.app,
@@ -147,74 +118,43 @@ const CardsPage: FC = (): ReactElement => {
   };
 
   return (
-    <main>
-      <Box className={classes.gameProgressBox}>
+    <>
+      <div className="game-progress-bar">
         {userAnswers.length !== 0 &&
           userAnswers.map((answer) => (
             <Star
               key={answer.id}
-              className={clsx(
-                classes.star,
-                answer.type === 'right'
-                  ? classes.goldStar
-                  : classes.outlinedStar
-              )}
+              width={50}
+              height={50}
+              fill={answer.type === 'right' ? 'gold' : 'none'}
             />
           ))}
-      </Box>
-      <Grid
-        className={classes.container}
-        justify="center"
-        container
-        spacing={3}
-      >
-        {idFromParams ? (
-          cards.map((card) => (
-            <Grid item key={card.id} lg={3} md={3}>
-              <WordCard
-                id={card.id}
-                imgSource={card.imageSrc}
-                wordText={card.title}
-                translatedWordText={card.translatedTitle}
-                listenSource={card.soundSrc}
-                isGameMode={gameMode}
-                disabled={disabledCards.some(
-                  (disabledCardId) => disabledCardId === card.id
-                )}
-                gameClickHandler={cardClickInGameModeHandler}
-              />
-            </Grid>
-          ))
-        ) : (
-          <Typography color="secondary" variant="h5">
-            Category not selected...
-          </Typography>
-        )}
-        {gameMode && (
-          <Box>
-            {isGameStarted ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={playSoundHandler}
-              >
-                Repeat
-              </Button>
-            ) : (
-              <Button
-                className={clsx(highlightedStartButton && classes.highlight)}
-                variant="contained"
-                color="secondary"
-                onClick={startGameHandler}
-              >
-                Start game
-              </Button>
+      </div>
+      <div className="game-cards-container">
+        {cards.map((card) => (
+          <GameCard
+            key={card.id}
+            {...card}
+            isGameMode={gameMode}
+            disabled={disabledCards.some(
+              (disabledCardId) => disabledCardId === card.id
             )}
-          </Box>
+            gameClickHandler={cardClickInGameModeHandler}
+          />
+        ))}
+      </div>
+      <div className="game-control-wrapper">
+        {gameMode && (
+          <GameControl
+            isGameStarted={isGameStarted}
+            isHeighlightStart={highlightedStartButton}
+            onStart={startGameHandler}
+            onRepeat={playSoundHandler}
+          />
         )}
-      </Grid>
-    </main>
+      </div>
+    </>
   );
 };
 
-export default CardsPage;
+export default GamePage;
