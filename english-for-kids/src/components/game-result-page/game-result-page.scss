@@ -6,6 +6,7 @@
 }
 
 .game-result__primary {
+  text-align: center;
   font-size: 52px;
   font-weight: normal;
   color: tomato;
@@ -19,4 +20,18 @@
 
 .game-result__image {
   margin-top: 35px;
+  max-width: 450px;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 420px) {
+  .game-result__primary{
+    font-size: 38px;
+  }
+
+  .game-result__secondary {
+    font-size: 24px;
+  }
+  
 }
