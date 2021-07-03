@@ -7,6 +7,7 @@ import {
 const initialState: AppState = {
   openedAsideMenu: false,
   gameMode: false,
+  isLoading: false,
 };
 
 const appReducer = (
@@ -28,6 +29,11 @@ const appReducer = (
       return {
         ...state,
         gameMode: action.payload,
+      };
+    case AppStateActionTypes.SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     default:
       return state;

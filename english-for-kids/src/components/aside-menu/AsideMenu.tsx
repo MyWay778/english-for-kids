@@ -51,9 +51,9 @@ const AsideMenu: FC = (): ReactElement => {
                 <img
                   className="categories-nav__avatar"
                   src={cat.imageSrc}
-                  alt={cat.title}
+                  alt={cat.name}
                 />
-                <span className="categories-nav__title">{cat.title}</span>
+                <span className="categories-nav__title">{cat.name}</span>
               </NavLink>
             </li>
           ))}

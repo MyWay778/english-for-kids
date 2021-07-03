@@ -9,10 +9,14 @@ import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
 
 const App: FC = (): ReactElement => {
-  const { fetchCategories } = useActions();
+  const { fetchCategories, setIsLoading } = useActions();
 
   useEffect(() => {
-    fetchCategories();
+    (async () => {
+      setIsLoading(true);
+      await fetchCategories();
+      setTimeout(setIsLoading.bind(null, false), 1000);
+    })()
   }, []);
 
   return (

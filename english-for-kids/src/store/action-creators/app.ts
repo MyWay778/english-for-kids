@@ -19,10 +19,17 @@ const setGameMode =
     dispatch({ type: AppStateActionTypes.SET_GAME_MODE, payload: isGameMode });
   };
 
+const setIsLoading =
+  (isLoading: boolean) =>
+  (dispatch: Dispatch<AppStateActions>): void => {
+    dispatch({ type: AppStateActionTypes.SET_IS_LOADING, payload: isLoading });
+  };
+
 const appActionCreators = {
   openAsideMenu,
   closeAsideMenu,
   setGameMode,
+  setIsLoading,
 };
 
 export default appActionCreators;

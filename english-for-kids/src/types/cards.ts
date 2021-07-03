@@ -4,8 +4,8 @@ export interface CardsState {
 
 export interface CardType {
   id: number;
-  title: string;
-  translatedTitle: string;
+  spelling: string;
+  translating: string;
   imageSrc: string;
   soundSrc: string;
 }

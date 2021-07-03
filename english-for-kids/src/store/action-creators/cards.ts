@@ -4,8 +4,8 @@ import { CardActions, CardsActionTypes } from '../../types/cards';
 
 const fetchCards =
   (categoryId: number) =>
-  (dispatch: Dispatch<CardActions>): void => {
-    const cards = fetchCardsFromApi(categoryId);
+  async (dispatch: Dispatch<CardActions>): Promise<void> => {
+    const cards = await fetchCardsFromApi(categoryId);
     if (cards) {
       dispatch({type: CardsActionTypes.FETCH_CARDS, payload: cards});
     }

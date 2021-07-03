@@ -1,17 +1,17 @@
 import { Dispatch } from 'react';
 import { fetchCategoriesFromApi } from '../../mock-api/mock-api';
-import { CategoryActions, CategoryActionsTypes } from '../../types/category';
+import { CategoryActions, CategoryActionsTypes, CurrentCategoryType } from '../../types/category';
 
 export const changeCategory =
-  (categoryId: number) =>
+  (category: CurrentCategoryType) =>
   (dispatch: Dispatch<CategoryActions>): void => {
-    dispatch({ type: CategoryActionsTypes.CHANGE_CATEGORY, payload: categoryId });
+    dispatch({ type: CategoryActionsTypes.CHANGE_CATEGORY, payload: category });
   };
 
 export const fetchCategories =
   () =>
-  (dispatch: Dispatch<CategoryActions>): void => {
-    const categories = fetchCategoriesFromApi();
+  async (dispatch: Dispatch<CategoryActions>): Promise<void> => {
+    const categories = await fetchCategoriesFromApi();
     dispatch({
       type: CategoryActionsTypes.FETCH_CATEGORIES,
       payload: categories,

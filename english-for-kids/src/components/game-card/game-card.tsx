@@ -1,13 +1,11 @@
-/* eslint-disable no-lone-blocks */
 import React, { FC, ReactElement, useRef, useState } from 'react';
 import clsx from 'clsx';
 import './game-card.scss';
 import LoopIcon from '../icons/LoopIcon';
 
 interface WordCardProps {
-  id: number;
-  title: string;
-  translatedTitle: string;
+  spelling: string;
+  translating: string;
   imageSrc: string;
   soundSrc: string;
   isGameMode: boolean;
@@ -15,14 +13,12 @@ interface WordCardProps {
   gameClickHandler: GameClickHandlerType;
 }
 
-export type GameClickHandlerType = (cardId: number) => void;
+export type GameClickHandlerType = () => void;
 
 const GameCard: FC<WordCardProps> = ({
-  id,
-  title,
-  translatedTitle,
+  spelling,
+  translating,
   imageSrc,
-  soundSrc,
   isGameMode,
   disabled,
   gameClickHandler,
@@ -62,18 +58,6 @@ const GameCard: FC<WordCardProps> = ({
     }
   };
 
-  const clickOnFrontInGameModeHandler = () => {
-    gameClickHandler(id);
-  };
-
-  const clickOnFrontHandler = () => {
-    if (soundSrc) {
-      const audio = new Audio(soundSrc);
-      audio.volume = 0.2;
-      audio.play();
-    }
-  };
-
   return (
     <div className="card-wrapper" ref={cardContainer}>
       <div
@@ -85,9 +69,7 @@ const GameCard: FC<WordCardProps> = ({
             'game-card__action-area',
             disabled && 'game-card__action-area_disabled'
           )}
-          onClick={
-            isGameMode ? clickOnFrontInGameModeHandler : clickOnFrontHandler
-          }
+          onClick={gameClickHandler}
         >
           <div className="game-card__front-wrapper">
             <img
@@ -96,7 +78,7 @@ const GameCard: FC<WordCardProps> = ({
                 isGameMode && 'game-card__img_full-height'
               )}
               src={imageSrc}
-              alt={title}
+              alt={spelling}
             />
             <div
               className={clsx(
@@ -104,7 +86,7 @@ const GameCard: FC<WordCardProps> = ({
                 isGameMode && 'game-card__front_hidden'
               )}
             >
-              <h4 className="game-card__title">{title}</h4>
+              <h4 className="game-card__title">{spelling}</h4>
               <button
                 className="game-card__flip-btn"
                 onClick={loopButtonHandler}
@@ -113,7 +95,7 @@ const GameCard: FC<WordCardProps> = ({
               </button>
             </div>
           </div>
-          <div className="game-card__back">{translatedTitle}</div>
+          <div className="game-card__back">{translating}</div>
         </div>
       </div>
     </div>

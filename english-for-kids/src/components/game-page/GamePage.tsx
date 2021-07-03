@@ -1,13 +1,13 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import GameCard, { GameClickHandlerType } from '../game-card/game-card';
+import GameCard from '../game-card/game-card';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import useActions from '../../hooks/useActions';
 import { CardType } from '../../types/cards';
 import Star from '../icons/Star';
 import './game-page.scss';
 import GameControl from '../game-control/GameControl';
-
+import Loader from '../loader';
+import useActions from '../../hooks/useActions';
 
 const shuffleCards = (cards: CardType[]): CardType[] =>
   cards.concat().sort(() => Math.random() - 0.5);
@@ -28,11 +28,13 @@ interface CardsParams {
 }
 
 const GamePage: FC = (): ReactElement => {
-  const { cards, gameMode } = useTypedSelector((state) => ({
+  console.log('render');
+  const { cards, gameMode, isLoading } = useTypedSelector((state) => ({
     ...state.cards,
     ...state.app,
   }));
-  const { fetchCards, setGameResult, setGameMode } = useActions();
+
+  const { fetchCards, setGameResult, setGameMode, setIsLoading, setSessionStatistic } = useActions();
   const history = useHistory();
   const idFromParams = useParams<CardsParams>()?.id;
 
@@ -44,9 +46,19 @@ const GamePage: FC = (): ReactElement => {
 
   useEffect(() => {
     if (idFromParams) {
-      fetchCards(Number(idFromParams));
+      (async () => {
+        setIsLoading(true);
+        await fetchCards(Number(idFromParams));
+        setTimeout(setIsLoading.bind(null, false), 1000);
+      })();
     }
   }, []);
+
+  useEffect(() => {
+    if (cards.length > 0) {
+      setSessionStatistic(cards);
+    }
+  }, [cards]);
 
   useEffect(() => {
     if (isGameStarted && !gameMode) {
@@ -92,7 +104,15 @@ const GamePage: FC = (): ReactElement => {
     setShuffledCards(justShuffledCards);
   };
 
-  const cardClickInGameModeHandler: GameClickHandlerType = (cardId) => {
+  const clickOnFrontHandler = (soundSrc: string): void => {
+    if (soundSrc) {
+      const audio = new Audio(soundSrc);
+      audio.volume = 0.2;
+      audio.play();
+    }
+  };
+
+  const cardClickInGameModeHandler = (cardId: number) => {
     if (!isGameStarted) {
       setHighlightedStartButton(true);
       return;
@@ -105,6 +125,7 @@ const GamePage: FC = (): ReactElement => {
         userAnswers.concat({ id: userAnswers.length, type: 'right' })
       );
       if (shuffledCards.length === 1) {
+        console.log(userAnswers);
         finishGame();
         return;
       }
@@ -116,6 +137,10 @@ const GamePage: FC = (): ReactElement => {
       );
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -131,17 +156,21 @@ const GamePage: FC = (): ReactElement => {
           ))}
       </div>
       <div className="game-cards-container">
-        {cards.map((card) => (
-          <GameCard
+        {cards.map((card) => {
+          const cardClickHandler = gameMode
+          ? cardClickInGameModeHandler.bind(null, card.id)
+          : clickOnFrontHandler.bind(null, card.soundSrc);
+
+         return <GameCard
             key={card.id}
             {...card}
             isGameMode={gameMode}
             disabled={disabledCards.some(
               (disabledCardId) => disabledCardId === card.id
             )}
-            gameClickHandler={cardClickInGameModeHandler}
-          />
-        ))}
+            gameClickHandler={cardClickHandler}
+          />;
+        })}
       </div>
       <div className="game-control-wrapper">
         {gameMode && (
