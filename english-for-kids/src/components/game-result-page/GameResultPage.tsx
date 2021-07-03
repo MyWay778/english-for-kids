@@ -4,6 +4,9 @@ import thumbUpImage from '../../static/images/emoji/thumbs-up.webp';
 import gladImage from '../../static/images/emoji/glad.webp';
 import sadImage from '../../static/images/emoji/sad.webp';
 import './game-result-page.scss';
+import playSound from '../../helpers/playSound';
+import successSound from '../../static/sounds/success.wav';
+import failSound from '../../static/sounds/fail.wav';
 
 const GameResultPage: FC = () => {
   const { gameResult } = useTypedSelector((state) => state.game);
@@ -15,6 +18,7 @@ const GameResultPage: FC = () => {
   let mistakesMessage: string;
   let congratulationsMessage = 'Congratulations, you won!';
   let resultImage: string;
+  let sound = successSound;
 
   if (gameResult.wrongAnswers > 0) {
     resultImage = gladImage;
@@ -26,11 +30,14 @@ const GameResultPage: FC = () => {
       congratulationsMessage = 'Oops!...'
       mistakesMessage = 'You\'ve made too many mistakes.';
       resultImage = sadImage;
+      sound = failSound;
     }
   } else {
     mistakesMessage = 'Without mistakes!'
     resultImage = thumbUpImage;
   }
+
+  playSound(sound);
 
   return (
     <div className="game-result">

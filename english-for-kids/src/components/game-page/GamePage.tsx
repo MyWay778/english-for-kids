@@ -8,15 +8,12 @@ import './game-page.scss';
 import GameControl from '../game-control/GameControl';
 import Loader from '../loader';
 import useActions from '../../hooks/useActions';
+import rightAnswerSound from '../../static/sounds/right.wav';
+import wrongAnswerSound from '../../static/sounds/wrong.wav';
+import playSound from '../../helpers/playSound';
 
 const shuffleCards = (cards: CardType[]): CardType[] =>
   cards.concat().sort(() => Math.random() - 0.5);
-
-const playSound = (card: CardType): void => {
-  const audio = new Audio(card.soundSrc);
-  audio.volume = 0.2;
-  audio.play();
-};
 
 interface UserAnswerType {
   id: number;
@@ -28,13 +25,18 @@ interface CardsParams {
 }
 
 const GamePage: FC = (): ReactElement => {
-  console.log('render');
   const { cards, gameMode, isLoading } = useTypedSelector((state) => ({
     ...state.cards,
     ...state.app,
   }));
 
-  const { fetchCards, setGameResult, setGameMode, setIsLoading, setSessionStatistic } = useActions();
+  const {
+    fetchCards,
+    setGameResult,
+    setGameMode,
+    setIsLoading,
+    setSessionStatistic,
+  } = useActions();
   const history = useHistory();
   const idFromParams = useParams<CardsParams>()?.id;
 
@@ -52,7 +54,7 @@ const GamePage: FC = (): ReactElement => {
         setTimeout(setIsLoading.bind(null, false), 1000);
       })();
     }
-  }, []);
+  }, [idFromParams]);
 
   useEffect(() => {
     if (cards.length > 0) {
@@ -94,13 +96,13 @@ const GamePage: FC = (): ReactElement => {
   }, [userAnswers]);
 
   const playSoundHandler = () => {
-    playSound(shuffledCards[0]);
+    playSound(shuffledCards[0].soundSrc);
   };
 
   const startGameHandler = () => {
     setIsGameStarted(true);
     const justShuffledCards = shuffleCards(cards);
-    playSound(justShuffledCards[0]);
+    playSound(justShuffledCards[0].soundSrc);
     setShuffledCards(justShuffledCards);
   };
 
@@ -125,13 +127,15 @@ const GamePage: FC = (): ReactElement => {
         userAnswers.concat({ id: userAnswers.length, type: 'right' })
       );
       if (shuffledCards.length === 1) {
-        console.log(userAnswers);
         finishGame();
         return;
       }
-      playSound(shuffledCards[1]);
+      playSound(rightAnswerSound, () => {
+        playSound(shuffledCards[1].soundSrc);
+      });
       setShuffledCards(shuffledCards.slice(1));
     } else {
+      playSound(wrongAnswerSound);
       setUserAnswers(
         userAnswers.concat({ id: userAnswers.length, type: 'wrong' })
       );
@@ -158,18 +162,20 @@ const GamePage: FC = (): ReactElement => {
       <div className="game-cards-container">
         {cards.map((card) => {
           const cardClickHandler = gameMode
-          ? cardClickInGameModeHandler.bind(null, card.id)
-          : clickOnFrontHandler.bind(null, card.soundSrc);
+            ? cardClickInGameModeHandler.bind(null, card.id)
+            : clickOnFrontHandler.bind(null, card.soundSrc);
 
-         return <GameCard
-            key={card.id}
-            {...card}
-            isGameMode={gameMode}
-            disabled={disabledCards.some(
-              (disabledCardId) => disabledCardId === card.id
-            )}
-            gameClickHandler={cardClickHandler}
-          />;
+          return (
+            <GameCard
+              key={card.id}
+              {...card}
+              isGameMode={gameMode}
+              disabled={disabledCards.some(
+                (disabledCardId) => disabledCardId === card.id
+              )}
+              gameClickHandler={cardClickHandler}
+            />
+          );
         })}
       </div>
       <div className="game-control-wrapper">
