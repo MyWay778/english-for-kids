@@ -1,0 +1,32 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 40px;
+}
+
+.footer__github {
+  display: inline-block;
+  height: 30px;
+  padding-left: 35px;
+  padding-top: 5px;
+  background: left / 30px no-repeat url('../../static/icon/github.svg');
+  color:darkslategray
+}
+
+.footer__rss {
+  display: inline-block;
+  height: 25px;
+  width: 70px;
+  padding-top: 5px;
+  background: left / contain no-repeat url('../../static/icon/rss.svg');
+  color:darkslategray
+}
+
+.footer__year {
+  align-self: flex-end;
+}

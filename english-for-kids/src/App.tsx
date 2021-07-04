@@ -7,6 +7,7 @@ import GamePage from './components/game-page/GamePage';
 import useActions from './hooks/useActions';
 import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
+import Footer from './components/footer';
 
 const App: FC = (): ReactElement => {
   const { fetchCategories, setIsLoading } = useActions();
@@ -36,6 +37,7 @@ const App: FC = (): ReactElement => {
           </Route>
         </Switch>
       </main>
+      <Footer/>
     </BrowserRouter>
   );
 };
