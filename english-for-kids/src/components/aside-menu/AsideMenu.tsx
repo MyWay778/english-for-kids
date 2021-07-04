@@ -5,13 +5,14 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
 import './aside-menu.scss';
 import homeIcon from '../../static/icon/home.svg';
+import statsIcon from '../../static/icon/stats.svg'
 
 const AsideMenu: FC = (): ReactElement => {
   const { openedAsideMenu, categories } = useTypedSelector((state) => ({
     ...state.app,
-    ...state.category,
+    ...state.game,
   }));
-  const { closeAsideMenu } = useActions();
+  const { closeAsideMenu, changeCategory} = useActions();
 
   const navClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -23,6 +24,8 @@ const AsideMenu: FC = (): ReactElement => {
       closeAsideMenu();
     }
   };
+
+  const clickHandlerCreator = (id: number, name: string): () => void => () => {changeCategory({id, name})};
 
   return (
     <>
@@ -38,6 +41,12 @@ const AsideMenu: FC = (): ReactElement => {
               <span className="categories-nav__title">Home</span>
             </Link>
           </li>
+          <li>
+            <Link className="nav-menu__link" to="/statistic">
+              <img className="nav-menu__icon" src={statsIcon} alt="Stats" />
+              <span className="categories-nav__title">Statistics</span>
+            </Link>
+          </li>
         </ul>
         <hr className="side-menu__divider" />
         <ul className="categories-nav">
@@ -47,6 +56,7 @@ const AsideMenu: FC = (): ReactElement => {
                 className="categories-nav__link"
                 activeClassName="categories-nav__link_active"
                 to={`/cards/${cat.id}`}
+                onClick={clickHandlerCreator(cat.id, cat.name)}
               >
                 <img
                   className="categories-nav__avatar"

@@ -1,0 +1,79 @@
+@use '../../styles/mixins.scss' as mixins;
+
+.statistics-wrapper {
+  overflow: auto;
+  width: 100%;
+}
+
+.statistics {
+  width: 100%;
+  min-width: 800px;
+  margin-bottom: 35px;
+}
+
+.statistics__title {
+  font-size: 28px;
+  font-weight: bold;
+  color: darkslategrey;
+  margin-bottom: 25px;
+}
+
+.statistics__head {
+  background-color: #6a81eb;
+  color: white;
+  font-weight: 400;
+  height: 75px;
+  font-size: 22px;
+}
+
+.statistics__row {
+  height: 50px;
+}
+
+.statistics__row:nth-child(even) {
+  background-color: ghostwhite
+}
+.statistics__item {
+  text-align: start;
+  font-weight: 400;
+  padding-left: 3%;
+  &_digit {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  &_correct {
+    color: #4ce663;
+  }
+
+  &_train {
+    color: yellow;
+  }
+
+  &_mistake {
+    color: #ff8789
+  }
+
+  &_bold {
+    font-weight: bold;
+  }
+}
+
+.statistics-button {
+  @include mixins.iconBtn(20px, 20px, url('../static/icon/delete.svg'));
+  width: 85px;
+  height: 35px;
+  font-size: 16px;
+  display: block;
+  margin-left: auto;
+  background-size: 25px 25px;
+  background-position: 8px;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  transition: background-color 0.2s ease-in;
+
+  &:hover {
+    background-color: rgba(0,0,0,.05);
+  }
+}

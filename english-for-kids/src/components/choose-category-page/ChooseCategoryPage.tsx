@@ -5,7 +5,7 @@ import Loader from '../loader';
 import './choose-category-page.scss';
 
 const ChooseCategoryPage: FC = (): ReactElement => {
-  const { categories, gameMode, isLoading } = useTypedSelector((state) => ({...state.category, ...state.app}));
+  const { categories, gameMode, isLoading } = useTypedSelector((state) => ({...state.game, ...state.app}));
   if (isLoading) {
     return <Loader/>
   }

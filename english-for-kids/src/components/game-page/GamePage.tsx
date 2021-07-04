@@ -1,8 +1,7 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import GameCard from '../game-card/game-card';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import { CardType } from '../../types/cards';
 import Star from '../icons/Star';
 import './game-page.scss';
 import GameControl from '../game-control/GameControl';
@@ -11,6 +10,7 @@ import useActions from '../../hooks/useActions';
 import rightAnswerSound from '../../static/sounds/right.wav';
 import wrongAnswerSound from '../../static/sounds/wrong.wav';
 import playSound from '../../helpers/playSound';
+import { CardType } from '../../types/game';
 
 const shuffleCards = (cards: CardType[]): CardType[] =>
   cards.concat().sort(() => Math.random() - 0.5);
@@ -26,7 +26,7 @@ interface CardsParams {
 
 const GamePage: FC = (): ReactElement => {
   const { cards, gameMode, isLoading } = useTypedSelector((state) => ({
-    ...state.cards,
+    ...state.game,
     ...state.app,
   }));
 
@@ -35,7 +35,8 @@ const GamePage: FC = (): ReactElement => {
     setGameResult,
     setGameMode,
     setIsLoading,
-    setSessionStatistic,
+    updateWordsStatistic,
+    saveWordsStatistic,
   } = useActions();
   const history = useHistory();
   const idFromParams = useParams<CardsParams>()?.id;
@@ -45,22 +46,22 @@ const GamePage: FC = (): ReactElement => {
   const [userAnswers, setUserAnswers] = useState<UserAnswerType[]>([]);
   const [highlightedStartButton, setHighlightedStartButton] = useState(false);
   const [disabledCards, setDisabledCards] = useState<number[]>([]);
+  const mayClickRef = useRef(false);
 
   useEffect(() => {
     if (idFromParams) {
       (async () => {
         setIsLoading(true);
         await fetchCards(Number(idFromParams));
-        setTimeout(setIsLoading.bind(null, false), 1000);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       })();
     }
+    return () => {
+      saveWordsStatistic();
+    };
   }, [idFromParams]);
-
-  useEffect(() => {
-    if (cards.length > 0) {
-      setSessionStatistic(cards);
-    }
-  }, [cards]);
 
   useEffect(() => {
     if (isGameStarted && !gameMode) {
@@ -102,21 +103,27 @@ const GamePage: FC = (): ReactElement => {
   const startGameHandler = () => {
     setIsGameStarted(true);
     const justShuffledCards = shuffleCards(cards);
-    playSound(justShuffledCards[0].soundSrc);
+    playSound(justShuffledCards[0].soundSrc, () => {
+      mayClickRef.current = true;
+    });
     setShuffledCards(justShuffledCards);
   };
 
-  const clickOnFrontHandler = (soundSrc: string): void => {
+  const clickOnFrontHandler = (cardId: number, soundSrc: string): void => {
     if (soundSrc) {
       const audio = new Audio(soundSrc);
       audio.volume = 0.2;
       audio.play();
     }
+    updateWordsStatistic({ id: String(cardId), clicksInTrain: 1 });
   };
 
   const cardClickInGameModeHandler = (cardId: number) => {
     if (!isGameStarted) {
       setHighlightedStartButton(true);
+      return;
+    }
+    if (!mayClickRef.current) {
       return;
     }
     if (cardId === shuffledCards[0].id) {
@@ -126,20 +133,27 @@ const GamePage: FC = (): ReactElement => {
       setUserAnswers(
         userAnswers.concat({ id: userAnswers.length, type: 'right' })
       );
+      updateWordsStatistic({ id: String(shuffledCards[0].id), guessed: 1 });
       if (shuffledCards.length === 1) {
         finishGame();
         return;
       }
       playSound(rightAnswerSound, () => {
-        playSound(shuffledCards[1].soundSrc);
+        playSound(shuffledCards[1].soundSrc, () => {
+          mayClickRef.current = true;
+        });
       });
       setShuffledCards(shuffledCards.slice(1));
     } else {
-      playSound(wrongAnswerSound);
+      playSound(wrongAnswerSound, () => {
+        mayClickRef.current = true;
+      });
       setUserAnswers(
         userAnswers.concat({ id: userAnswers.length, type: 'wrong' })
       );
+      updateWordsStatistic({ id: String(shuffledCards[0].id), missed: 1 });
     }
+    mayClickRef.current = false;
   };
 
   if (isLoading) {
@@ -163,7 +177,7 @@ const GamePage: FC = (): ReactElement => {
         {cards.map((card) => {
           const cardClickHandler = gameMode
             ? cardClickInGameModeHandler.bind(null, card.id)
-            : clickOnFrontHandler.bind(null, card.soundSrc);
+            : clickOnFrontHandler.bind(null, card.id, card.soundSrc);
 
           return (
             <GameCard

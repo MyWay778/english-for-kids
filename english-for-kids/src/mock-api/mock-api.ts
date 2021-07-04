@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { CardType } from '../types/cards';
-import { CategoryType } from '../types/category';
+import { CardType, CategoryType } from '../types/game';
 import { categories } from './data';
 
 export const fetchCategoriesFromApi = (): Promise<CategoryType[]> =>

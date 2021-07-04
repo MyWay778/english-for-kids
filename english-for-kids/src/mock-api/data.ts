@@ -102,7 +102,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/sing.jpg',
     words: [
       {
-        id: 1,
+        id: 9,
         spelling: 'swim',
         translating: 'плавать',
         imageSrc:
@@ -111,7 +111,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/swim.mp3',
       },
       {
-        id: 2,
+        id: 10,
         spelling: 'skip',
         translating: 'пропускать, прыгать',
         imageSrc:
@@ -120,7 +120,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/skip.mp3',
       },
       {
-        id: 3,
+        id: 11,
         spelling: 'sing',
         translating: 'петь',
         imageSrc:
@@ -129,7 +129,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/sing.mp3',
       },
       {
-        id: 4,
+        id: 12,
         spelling: 'run',
         translating: 'бежать',
         imageSrc:
@@ -138,7 +138,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/run.mp3',
       },
       {
-        id: 5,
+        id: 13,
         spelling: 'open',
         translating: 'открывать',
         imageSrc:
@@ -147,7 +147,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/open.mp3',
       },
       {
-        id: 6,
+        id: 14,
         spelling: 'ride',
         translating: 'ездить',
         imageSrc:
@@ -156,7 +156,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/ride.mp3',
       },
       {
-        id: 7,
+        id: 15,
         spelling: 'point',
         translating: 'указывать',
         imageSrc:
@@ -165,7 +165,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/point.mp3',
       },
       {
-        id: 8,
+        id: 16,
         spelling: 'play',
         translating: 'играть',
         imageSrc:
@@ -182,7 +182,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/play.jpg',
     words: [
       {
-        id: 1,
+        id: 17,
         spelling: 'push',
         translating: 'толкать',
         imageSrc:
@@ -191,7 +191,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/push--_us_1.mp3',
       },
       {
-        id: 2,
+        id: 18,
         spelling: 'pull',
         translating: 'тянуть',
         imageSrc:
@@ -200,7 +200,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/pull--_us_1.mp3',
       },
       {
-        id: 3,
+        id: 19,
         spelling: 'drop',
         translating: 'падать',
         imageSrc: 'https://www.astromeridian.ru/assets/images/sonnik/ypast.jpg',
@@ -208,7 +208,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/drop--_us_1.mp3',
       },
       {
-        id: 4,
+        id: 20,
         spelling: 'argue',
         translating: 'спорить',
         imageSrc:
@@ -217,7 +217,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/argue--_us_1.mp3',
       },
       {
-        id: 5,
+        id: 21,
         spelling: 'drive',
         translating: 'водить машину',
         imageSrc:
@@ -226,7 +226,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/drive--_us_1.mp3',
       },
       {
-        id: 6,
+        id: 22,
         spelling: 'catch',
         translating: 'ловить',
         imageSrc:
@@ -235,7 +235,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/catch--_us_1.mp3',
       },
       {
-        id: 7,
+        id: 23,
         spelling: 'carry',
         translating: 'нести',
         imageSrc:
@@ -244,7 +244,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/carry--_us_1.mp3',
       },
       {
-        id: 8,
+        id: 24,
         spelling: 'build',
         translating: 'строить',
         imageSrc:
@@ -261,7 +261,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/scared.jpg',
     words: [
       {
-        id: 1,
+        id: 25,
         spelling: 'big',
         translating: 'большой',
         imageSrc:
@@ -270,7 +270,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/big--_us_1.mp3',
       },
       {
-        id: 2,
+        id: 26,
         spelling: 'small',
         translating: 'маленький',
         imageSrc:
@@ -279,7 +279,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/small--_us_1.mp3',
       },
       {
-        id: 3,
+        id: 27,
         spelling: 'fast',
         translating: 'быстрый',
         imageSrc:
@@ -288,7 +288,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/fast--_us_1.mp3',
       },
       {
-        id: 4,
+        id: 28,
         spelling: 'slow',
         translating: 'медленный',
         imageSrc:
@@ -297,7 +297,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/slow--_us_1.mp3',
       },
       {
-        id: 5,
+        id: 29,
         spelling: 'friendly',
         translating: 'дружелюбный',
         imageSrc:
@@ -306,7 +306,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/friendly--_us_1.mp3',
       },
       {
-        id: 6,
+        id: 30,
         spelling: 'unfriendly',
         translating: 'ловить',
         imageSrc:
@@ -315,7 +315,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/unfriendly--_us_1.mp3',
       },
       {
-        id: 7,
+        id: 31,
         spelling: 'young',
         translating: 'молодой',
         imageSrc: 'https://i.redd.it/azc0s59g0q131.jpg',
@@ -323,7 +323,7 @@ export const categories: Category[] = [
           'https://ssl.gstatic.com/dictionary/static/sounds/oxford/young--_us_1.mp3',
       },
       {
-        id: 8,
+        id: 32,
         spelling: 'old',
         translating: 'старый',
         imageSrc:
@@ -340,7 +340,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/bird.jpg',
     words: [
       {
-        id: 1,
+        id: 33,
         spelling: 'cat',
         translating: 'кот',
         imageSrc:
@@ -349,7 +349,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/cat.mp3',
       },
       {
-        id: 2,
+        id: 34,
         spelling: 'chick',
         translating: 'цыпленок',
         imageSrc:
@@ -358,7 +358,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/chick.mp3',
       },
       {
-        id: 3,
+        id: 35,
         spelling: 'chicken',
         translating: 'курица',
         imageSrc:
@@ -367,7 +367,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/chicken.mp3',
       },
       {
-        id: 4,
+        id: 36,
         spelling: 'dog',
         translating: 'собака',
         imageSrc:
@@ -376,7 +376,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/dog.mp3',
       },
       {
-        id: 5,
+        id: 37,
         spelling: 'horse',
         translating: 'лошадь',
         imageSrc:
@@ -385,7 +385,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/horse.mp3',
       },
       {
-        id: 6,
+        id: 38,
         spelling: 'pig',
         translating: 'свинья',
         imageSrc:
@@ -394,7 +394,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/pig.mp3',
       },
       {
-        id: 7,
+        id: 39,
         spelling: 'rabbit',
         translating: 'кролик',
         imageSrc:
@@ -403,7 +403,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/rabbit.mp3',
       },
       {
-        id: 8,
+        id: 40,
         spelling: 'sheep',
         translating: 'овца',
         imageSrc:
@@ -420,7 +420,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/lion.jpg',
     words: [
       {
-        id: 1,
+        id: 41,
         spelling: 'dolphin',
         translating: 'дельфин',
         imageSrc:
@@ -429,7 +429,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/dolphin.mp3',
       },
       {
-        id: 2,
+        id: 42,
         spelling: 'turtle',
         translating: 'черепаха',
         imageSrc:
@@ -438,7 +438,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/turtle.mp3',
       },
       {
-        id: 3,
+        id: 43,
         spelling: 'mouse',
         translating: 'мышь',
         imageSrc:
@@ -447,7 +447,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/mouse.mp3',
       },
       {
-        id: 4,
+        id: 44,
         spelling: 'lion',
         translating: 'лев',
         imageSrc:
@@ -456,7 +456,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/lion.mp3',
       },
       {
-        id: 5,
+        id: 45,
         spelling: 'giraffe',
         translating: 'жираф',
         imageSrc:
@@ -465,7 +465,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/giraffe.mp3',
       },
       {
-        id: 6,
+        id: 46,
         spelling: 'frog',
         translating: 'жаба',
         imageSrc:
@@ -474,7 +474,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/frog.mp3',
       },
       {
-        id: 7,
+        id: 47,
         spelling: 'fish',
         translating: 'рыба',
         imageSrc:
@@ -483,7 +483,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/fish.mp3',
       },
       {
-        id: 8,
+        id: 48,
         spelling: 'bird',
         translating: 'птица',
         imageSrc:
@@ -500,7 +500,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/boot.jpg',
     words: [
       {
-        id: 1,
+        id: 49,
         spelling: 'shoe',
         translating: 'туфли',
         imageSrc:
@@ -509,7 +509,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/shoe.mp3',
       },
       {
-        id: 2,
+        id: 50,
         spelling: 'pants',
         translating: 'брюки',
         imageSrc:
@@ -518,7 +518,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/pants.mp3',
       },
       {
-        id: 3,
+        id: 51,
         spelling: 'blouse',
         translating: 'блузка',
         imageSrc:
@@ -527,7 +527,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/blouse.mp3',
       },
       {
-        id: 4,
+        id: 52,
         spelling: 'dress',
         translating: 'платье',
         imageSrc:
@@ -536,7 +536,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/dress.mp3',
       },
       {
-        id: 5,
+        id: 53,
         spelling: 'boot',
         translating: 'ботинок',
         imageSrc:
@@ -545,7 +545,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/boot.mp3',
       },
       {
-        id: 6,
+        id: 54,
         spelling: 'shirt',
         translating: 'рубаха',
         imageSrc:
@@ -554,7 +554,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/shirt.mp3',
       },
       {
-        id: 7,
+        id: 55,
         spelling: 'coat',
         translating: 'пальто',
         imageSrc:
@@ -563,7 +563,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/coat.mp3',
       },
       {
-        id: 8,
+        id: 56,
         spelling: 'skirt',
         translating: 'юбка',
         imageSrc:
@@ -580,7 +580,7 @@ export const categories: Category[] = [
       'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/img/smile.jpg',
     words: [
       {
-        id: 1,
+        id: 57,
         spelling: 'laugh',
         translating: 'смех',
         imageSrc:
@@ -589,7 +589,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/laugh.mp3',
       },
       {
-        id: 2,
+        id: 58,
         spelling: 'smile',
         translating: 'улыбка',
         imageSrc:
@@ -598,7 +598,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/smile.mp3',
       },
       {
-        id: 3,
+        id: 59,
         spelling: 'scared',
         translating: 'испуганный',
         imageSrc:
@@ -607,7 +607,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/scared.mp3',
       },
       {
-        id: 4,
+        id: 60,
         spelling: 'surprised',
         translating: 'удивленный',
         imageSrc:
@@ -616,7 +616,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/surprised.mp3',
       },
       {
-        id: 5,
+        id: 61,
         spelling: 'tired',
         translating: 'уставший',
         imageSrc:
@@ -625,7 +625,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/tired.mp3',
       },
       {
-        id: 6,
+        id: 62,
         spelling: 'happy',
         translating: 'счастливый',
         imageSrc:
@@ -634,7 +634,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/happy.mp3',
       },
       {
-        id: 7,
+        id: 63,
         spelling: 'angry',
         translating: 'сердитый',
         imageSrc:
@@ -643,7 +643,7 @@ export const categories: Category[] = [
           'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/rslang/english-for.kids.data/audio/angry.mp3',
       },
       {
-        id: 8,
+        id: 64,
         spelling: 'sad',
         translating: 'грустный',
         imageSrc:

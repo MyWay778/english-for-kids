@@ -8,9 +8,10 @@ import useActions from './hooks/useActions';
 import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
 import Footer from './components/footer';
+import StatisticPage from './pages/statistic';
 
 const App: FC = (): ReactElement => {
-  const { fetchCategories, setIsLoading } = useActions();
+  const { fetchCategories, setIsLoading} = useActions();
 
   useEffect(() => {
     (async () => {
@@ -18,6 +19,10 @@ const App: FC = (): ReactElement => {
       await fetchCategories();
       setTimeout(setIsLoading.bind(null, false), 1000);
     })()
+
+    // window.addEventListener('beforeunload', () => {
+    //   localStorage.setItem('test2','123');
+    // });
   }, []);
 
   return (
@@ -34,6 +39,9 @@ const App: FC = (): ReactElement => {
           </Route>
           <Route exact path="/result">
             <GameResultPage />
+          </Route>
+          <Route exact path="/statistic">
+            <StatisticPage />
           </Route>
         </Switch>
       </main>
