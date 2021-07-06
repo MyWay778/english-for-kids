@@ -9,9 +9,14 @@ import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
 import Footer from './components/footer';
 import StatisticPage from './pages/statistic';
+import Modal from './components/modal';
+import LoginForm from './components/login-form';
+import useTypedSelector from './hooks/useTypedSelector';
+import AdminPage from './pages/admin';
 
 const App: FC = (): ReactElement => {
   const { fetchCategories, setIsLoading} = useActions();
+  const {isOpenModal} = useTypedSelector(state => state.app);
 
   useEffect(() => {
     (async () => {
@@ -19,16 +24,15 @@ const App: FC = (): ReactElement => {
       await fetchCategories();
       setTimeout(setIsLoading.bind(null, false), 1000);
     })()
-
-    // window.addEventListener('beforeunload', () => {
-    //   localStorage.setItem('test2','123');
-    // });
   }, []);
 
   return (
     <BrowserRouter>
       <Header />
       <AsideMenu />
+      { isOpenModal && <Modal>
+        <LoginForm/>
+      </Modal>}
       <main className="main">
         <Switch>
           <Route exact path="/">
@@ -42,6 +46,9 @@ const App: FC = (): ReactElement => {
           </Route>
           <Route exact path="/statistic">
             <StatisticPage />
+          </Route>
+          <Route exact path="/admin">
+            <AdminPage />
           </Route>
         </Switch>
       </main>

@@ -1,5 +1,10 @@
 import { Dispatch } from 'react';
-import { AppStateActions, AppStateActionTypes } from '../../types/app';
+import { authorizeFromApi } from '../../mock-api/mock-api';
+import {
+  AppStateActions,
+  AppStateActionTypes,
+  UserLoginDataType,
+} from '../../types/app';
 
 const openAsideMenu =
   () =>
@@ -25,11 +30,39 @@ const setIsLoading =
     dispatch({ type: AppStateActionTypes.SET_IS_LOADING, payload: isLoading });
   };
 
+const setIsOpenModal =
+  (isOpened: boolean) =>
+  (dispatch: Dispatch<AppStateActions>): void => {
+    dispatch({
+      type: AppStateActionTypes.SET_IS_OPEN_MODAL,
+      payload: isOpened,
+    });
+  };
+
+const authorize =
+  (user: UserLoginDataType) =>
+  async (dispatch: Dispatch<AppStateActions>): Promise<void> => {
+    const responseStatus = await authorizeFromApi(user);
+    if (responseStatus === 200) {
+      dispatch({ type: AppStateActionTypes.SET_IS_AUTH, payload: true });
+      dispatch({ type: AppStateActionTypes.SET_IS_OPEN_MODAL, payload: false });
+    }
+  };
+
+const logout =
+  () =>
+  (dispatch: Dispatch<AppStateActions>): void => {
+    dispatch({ type: AppStateActionTypes.SET_IS_AUTH, payload: false });
+  };
+
 const appActionCreators = {
   openAsideMenu,
   closeAsideMenu,
   setGameMode,
   setIsLoading,
+  setIsOpenModal,
+  authorize,
+  logout,
 };
 
 export default appActionCreators;

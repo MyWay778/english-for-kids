@@ -1,18 +1,22 @@
-import { FC, ReactElement} from 'react';
+import { FC, ReactElement, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
 import './aside-menu.scss';
 import homeIcon from '../../static/icon/home.svg';
-import statsIcon from '../../static/icon/stats.svg'
+import statsIcon from '../../static/icon/stats.svg';
+import loginIcon from '../../static/icon/login.svg';
+import logoutIcon from '../../static/icon/logout.svg';
+import adminPanelIcon from '../../static/icon/settings.svg';
 
 const AsideMenu: FC = (): ReactElement => {
-  const { openedAsideMenu, categories } = useTypedSelector((state) => ({
+  const { openedAsideMenu, categories, isAuth } = useTypedSelector((state) => ({
     ...state.app,
     ...state.game,
   }));
-  const { closeAsideMenu, changeCategory} = useActions();
+  const { closeAsideMenu, changeCategory, setIsOpenModal, logout } =
+    useActions();
 
   const navClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -25,7 +29,15 @@ const AsideMenu: FC = (): ReactElement => {
     }
   };
 
-  const clickHandlerCreator = (id: number, name: string): () => void => () => {changeCategory({id, name})};
+  const clickHandlerCreator =
+    (id: number, name: string): (() => void) =>
+    () => {
+      changeCategory({ id, name });
+    };
+
+  const clickLoginHandler = useCallback(() => {
+    setIsOpenModal(true);
+  }, []);
 
   return (
     <>
@@ -47,6 +59,28 @@ const AsideMenu: FC = (): ReactElement => {
               <span className="categories-nav__title">Statistics</span>
             </Link>
           </li>
+          <li>
+            {isAuth ? (
+              <button className="nav-menu__button" onClick={logout}>
+                <img className="nav-menu__icon" src={logoutIcon} alt="Logout" />
+                <span className="categories-nav__title">Logout</span>
+              </button>
+            ) : (
+              <button className="nav-menu__button" onClick={clickLoginHandler} disabled>
+                <img className="nav-menu__icon" src={loginIcon} alt="Login" />
+                <span className="categories-nav__title">Login</span>
+                <span className="nav-menu__soon">soon...</span>
+              </button>
+            )}
+          </li>
+          {isAuth && (
+            <li>
+              <Link className="nav-menu__link" to="/admin">
+                <img className="nav-menu__icon" src={adminPanelIcon} alt="Admin panel" />
+                <span className="categories-nav__title">Admin panel</span>
+              </Link>
+            </li>
+          )}
         </ul>
         <hr className="side-menu__divider" />
         <ul className="categories-nav">

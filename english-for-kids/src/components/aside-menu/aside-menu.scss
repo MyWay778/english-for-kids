@@ -106,3 +106,38 @@
     visibility: visible;
   }
 }
+
+.nav-menu__button { 
+  border: none;
+  outline: none;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 35px;
+  transition: background-color 0.2s ease-in;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  &:disabled {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
+
+.nav-menu__soon {
+  position: absolute;
+  right: 17px;
+  font-size: 14px;
+  font-style: italic;
+}

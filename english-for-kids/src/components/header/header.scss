@@ -94,7 +94,7 @@
   height: 36px;
   position: absolute;
   left: 4px;
-  bottom: 2px;
+  bottom: 1.5px;
   border-radius: 50%;
   background-color: #e9ecf2;
   transition: 0.4s all ease;
@@ -102,7 +102,7 @@
 }
 
 .play-toggle__checkbox:checked + .play-toggle__toggle-thumb::before {
-  transform: translateX(56px);
+  transform: translateX(57px);
 }
 
 .play-toggle__checkbox:checked + .play-toggle__toggle-thumb {
@@ -166,9 +166,5 @@
     display: inline-block;
     padding: 0 15px;
     line-height: 20px;
-  }
-
-  .header-logo__preposition {
-
   }
 }

@@ -20,6 +20,7 @@ const StatisticPage: FC = (): ReactElement => {
   }, []);
 
   const wordsStatisticValues = Object.values(wordsStatistic);
+  console.log(wordsStatisticValues)
 
   if (wordsStatisticValues.length === 0) {
     return <p>there is no data...</p>
