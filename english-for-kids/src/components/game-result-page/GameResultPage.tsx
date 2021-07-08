@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import thumbUpImage from '../../static/images/emoji/thumbs-up.webp';
 import gladImage from '../../static/images/emoji/glad.webp';
@@ -8,8 +9,10 @@ import playSound from '../../helpers/playSound';
 import successSound from '../../static/sounds/success.wav';
 import failSound from '../../static/sounds/fail.wav';
 
+
 const GameResultPage: FC = () => {
   const { gameResult } = useTypedSelector((state) => state.game);
+  const history = useHistory();
 
   if (!gameResult) {
     return <p>Oops! Something went wrong</p>;
@@ -37,10 +40,16 @@ const GameResultPage: FC = () => {
     resultImage = thumbUpImage;
   }
 
-  playSound(sound);
+  const bodyClickHandler = (): void => {
+    history.push('/');
+  }
+
+  useEffect(() => {
+    playSound(sound);
+  }, []);
 
   return (
-    <div className="game-result">
+    <div className="game-result" onClick={bodyClickHandler}>
         <h2 className="game-result__primary">
           {congratulationsMessage}
         </h2>
