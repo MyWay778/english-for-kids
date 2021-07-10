@@ -15,6 +15,7 @@ export interface CategoryType {
   id: number;
   name: string;
   imageSrc: string;
+  wordCount: number;
 }
 
 export interface CardType {

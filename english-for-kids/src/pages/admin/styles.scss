@@ -1,0 +1,86 @@
+.admin-page-title {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.admin-page-categories-list {
+  display: flex;
+  column-gap: 25px;
+  row-gap: 25px;
+  list-style-type: none;
+  flex-wrap: wrap;
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
+
+.admin-page-category-card-row--avatar {
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+}
+
+.admin-page-category-card-control{
+  cursor: pointer;
+
+  &:hover .admin-page-category-card-control--btn {
+    background-color: rgba(0,0,0,.05);
+  }
+}
+
+.admin-page-category-card-control-buttons {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-page-category-card-control--btn {
+  width: 85px;
+  height: 85px;
+  background: transparent center / 55px no-repeat url('../../static/icon/plus.svg');
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+
+}
+
+.admin-page-category-card-control-title {
+  font-size: 18px;
+  text-align: center;
+}
+
+.admin-page-category-card-row--image-input {
+  visibility: hidden;
+}
+
+.admin-page-category-card-row-avatar-container {
+  display: block;
+  position: relative;
+
+  &_edit {
+    cursor: pointer;
+  }
+
+  &_edit::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    background: white center / 17px no-repeat url("../../static/icon/upload.svg");
+    border-radius: 50%;
+  }
+}
+
+.admin-page-category-card-row--input {
+  width: 100%;
+  border: none;
+  font-size: 18px;
+  border-bottom: 1px solid black;
+  padding: 5px 10px 3px;
+  outline-width: 1px;
+  outline-color: rgba(0,0,0,.1);
+  text-align: center;
+}

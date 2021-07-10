@@ -2,7 +2,6 @@
   "name": "english-for-kids",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
@@ -90,7 +89,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "deploy": "netlify deploy"
   },
   "browserslist": {
     "production": [
@@ -165,6 +165,7 @@
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "netlify-cli": "^4.1.13",
     "prettier": "^2.3.1"
   }
 }

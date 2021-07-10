@@ -1,0 +1,19 @@
+.admin-page-category-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-page-category-card-row--title {
+  font-weight: bold;
+}
+
+.admin-page-category-card-row--value {
+  flex-grow: 1;
+  text-align: center;
+  max-height: 115px;
+
+  &_text {
+    max-width: 150px;
+  }
+}

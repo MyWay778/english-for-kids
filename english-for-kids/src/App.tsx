@@ -47,9 +47,7 @@ const App: FC = (): ReactElement => {
           <Route exact path="/statistic">
             <StatisticPage />
           </Route>
-          <Route exact path="/admin">
-            <AdminPage />
-          </Route>
+          <Route exact path="/admin" component={AdminPage}/>
         </Switch>
       </main>
       <Footer/>

@@ -66,10 +66,9 @@ const AsideMenu: FC = (): ReactElement => {
                 <span className="categories-nav__title">Logout</span>
               </button>
             ) : (
-              <button className="nav-menu__button" onClick={clickLoginHandler} disabled>
+              <button className="nav-menu__button" onClick={clickLoginHandler}>
                 <img className="nav-menu__icon" src={loginIcon} alt="Login" />
                 <span className="categories-nav__title">Login</span>
-                <span className="nav-menu__soon">soon...</span>
               </button>
             )}
           </li>

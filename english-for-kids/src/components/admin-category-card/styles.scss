@@ -1,0 +1,109 @@
+.admin-page-category-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 18px;
+  width: 290px;
+  height: 310px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.admin-page-category-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-page-category-card-row--value {
+  flex-grow: 1;
+  text-align: center;
+
+  &_text {
+    max-width: 150px;
+  }
+}
+
+.admin-page-category-card-row--avatar {
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+}
+
+.admin-page-category-control {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 5px;
+}
+
+.admin-page-category-card-row--title {
+  font-weight: bold;
+}
+
+.admin-page-category-control--btn {
+  border: none;
+  font-size: 16px;
+  text-align: end;
+  padding: 8px 5px 8px 30px;
+  background: transparent 5px 4px / 20px url('../../static/icon/edit.svg') no-repeat;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in;
+
+  &:hover {
+    background-color: rgba(0,0,0,.05);
+  }
+
+  &_words {
+    background-image: url("../../static/icon/list.svg");
+  }
+
+  &_delete {
+    color: tomato;
+    font-weight: bold;
+    background-image: url("../../static/icon/delete.svg");
+  }
+
+  &_save {
+    background-image: url("../../static/icon/floppy-disk.svg");
+    background-position: 5px 6px;
+    font-weight: bold;
+    color: yellowgreen;
+  }
+
+  &_cancel {
+    background-image: url("../../static/icon/close.svg");
+    background-position: 5px 6px;
+  }
+}
+
+.admin-page-category-card-row--input {
+  width: 100%;
+  border: none;
+  font-size: 18px;
+  border-bottom: 1px solid black;
+  padding: 5px 10px 3px;
+  outline-width: 1px;
+  outline-color: rgba(0,0,0,.1);
+}
+
+.admin-page-category-card-row-avatar-container {
+  display: block;
+  position: relative;
+
+  &_edit {
+    cursor: pointer;
+  }
+
+  &_edit::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    right: 55px;
+    width: 28px;
+    height: 28px;
+    background: white center / 17px no-repeat url("../../static/icon/upload.svg");
+    border-radius: 50%;
+  }
+}
