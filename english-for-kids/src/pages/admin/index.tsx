@@ -16,7 +16,7 @@ const AdminPage: FC = (props): ReactElement => {
     <div className="admin-page">
       <h2 className="admin-page-title">Categories</h2>
       {
-        page === 'words' ? <AdminWordsList words={cards} edit={true}/>:  <AdminCategoryList categories={categories} edit={false}/>
+        page !== 'words' ? <AdminWordsList words={cards} edit={true}/>:  <AdminCategoryList categories={categories} edit={false}/>
       }
     </div>
   );
