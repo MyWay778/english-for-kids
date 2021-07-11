@@ -3,7 +3,6 @@ export interface AppState {
   gameMode: boolean;
   isLoading: boolean;
   isOpenModal: boolean;
-  isAuth: boolean;
 }
 
 export interface UserLoginDataType {
@@ -17,7 +16,6 @@ export enum AppStateActionTypes {
   SET_GAME_MODE = 'SET_GAME_MODE',
   SET_IS_LOADING = 'SET_IS_LOADING',
   SET_IS_OPEN_MODAL = 'SET_IS_OPEN_MODAL',
-  SET_IS_AUTH = 'SET_IS_AUTH',
 }
 
 interface OpenAsideMenuAction {
@@ -43,15 +41,9 @@ interface SetIsOpenModal {
   payload: boolean;
 }
 
-interface SetIsAuth {
-  type: AppStateActionTypes.SET_IS_AUTH;
-  payload: boolean;
-}
-
 export type AppStateActions =
   | OpenAsideMenuAction
   | CloseAsideMenuAction
   | SetGameModeAction
   | SetIsLoading
-  | SetIsOpenModal
-  | SetIsAuth;
+  | SetIsOpenModal;

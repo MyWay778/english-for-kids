@@ -1,5 +1,5 @@
-import { FC, ReactElement, useCallback } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import {FC, ReactElement, useCallback} from 'react';
+import {Link, NavLink} from 'react-router-dom';
 import clsx from 'clsx';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import useActions from '../../hooks/useActions';
@@ -11,12 +11,16 @@ import logoutIcon from '../../static/icon/logout.svg';
 import adminPanelIcon from '../../static/icon/settings.svg';
 
 const AsideMenu: FC = (): ReactElement => {
-  const { openedAsideMenu, categories, isAuth } = useTypedSelector((state) => ({
+  const {openedAsideMenu, categories, isAuth} = useTypedSelector((state) => ({
     ...state.app,
     ...state.game,
+    ...state.auth,
   }));
-  const { closeAsideMenu, changeCategory, setIsOpenModal, logout } =
+  const {closeAsideMenu, changeCategory, setIsOpenModal} =
     useActions();
+
+  // TODO: implement
+  const logout = () => console.log('logout');
 
   const navClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -31,9 +35,9 @@ const AsideMenu: FC = (): ReactElement => {
 
   const clickHandlerCreator =
     (id: number, name: string): (() => void) =>
-    () => {
-      changeCategory({ id, name });
-    };
+      () => {
+        changeCategory({id, name});
+      };
 
   const clickLoginHandler = useCallback(() => {
     setIsOpenModal(true);
@@ -49,25 +53,25 @@ const AsideMenu: FC = (): ReactElement => {
         <ul className="nav-menu">
           <li>
             <Link className="nav-menu__link" to="/">
-              <img className="nav-menu__icon" src={homeIcon} alt="Home" />
+              <img className="nav-menu__icon" src={homeIcon} alt="Home"/>
               <span className="categories-nav__title">Home</span>
             </Link>
           </li>
           <li>
             <Link className="nav-menu__link" to="/statistic">
-              <img className="nav-menu__icon" src={statsIcon} alt="Stats" />
+              <img className="nav-menu__icon" src={statsIcon} alt="Stats"/>
               <span className="categories-nav__title">Statistics</span>
             </Link>
           </li>
           <li>
             {isAuth ? (
               <button className="nav-menu__button" onClick={logout}>
-                <img className="nav-menu__icon" src={logoutIcon} alt="Logout" />
+                <img className="nav-menu__icon" src={logoutIcon} alt="Logout"/>
                 <span className="categories-nav__title">Logout</span>
               </button>
             ) : (
               <button className="nav-menu__button" onClick={clickLoginHandler}>
-                <img className="nav-menu__icon" src={loginIcon} alt="Login" />
+                <img className="nav-menu__icon" src={loginIcon} alt="Login"/>
                 <span className="categories-nav__title">Login</span>
               </button>
             )}
@@ -75,13 +79,13 @@ const AsideMenu: FC = (): ReactElement => {
           {isAuth && (
             <li>
               <Link className="nav-menu__link" to="/admin">
-                <img className="nav-menu__icon" src={adminPanelIcon} alt="Admin panel" />
+                <img className="nav-menu__icon" src={adminPanelIcon} alt="Admin panel"/>
                 <span className="categories-nav__title">Admin panel</span>
               </Link>
             </li>
           )}
         </ul>
-        <hr className="side-menu__divider" />
+        <hr className="side-menu__divider"/>
         <ul className="categories-nav">
           {categories.map((cat) => (
             <li key={cat.id}>

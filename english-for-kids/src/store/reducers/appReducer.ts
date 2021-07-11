@@ -9,7 +9,6 @@ const initialState: AppState = {
   gameMode: false,
   isLoading: false,
   isOpenModal: false,
-  isAuth: false,
 };
 
 const appReducer = (
@@ -41,12 +40,6 @@ const appReducer = (
       return {
         ...state,
         isOpenModal: action.payload,
-      };
-
-    case AppStateActionTypes.SET_IS_AUTH:
-      return {
-        ...state,
-        isAuth: action.payload,
       };
     default:
       return state;
