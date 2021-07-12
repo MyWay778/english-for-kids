@@ -34,9 +34,13 @@
   background-color: ghostwhite
 }
 .statistics__item {
+  position: relative;
   text-align: start;
   font-weight: 400;
   padding-left: 3%;
+  cursor: pointer;
+  user-select: none;
+
   &_digit {
     padding-left: 0;
     text-align: center;
@@ -57,6 +61,24 @@
   &_bold {
     font-weight: bold;
   }
+
+  &_sorted-down::after {
+    content: '↓';
+    margin-left: 5px;
+  }
+
+  &_sorted-up::after {
+    content: '↑';
+    margin-left: 5px;
+  }
+
+}
+
+.statistics__sort-arrow {
+  color: white;
+  position: absolute;
+  top: 22px;
+  right: 10%;
 }
 
 .statistics-button {

@@ -1,14 +1,17 @@
-import { FC, ReactElement, useEffect } from 'react';
+import {FC, ReactElement, useEffect} from 'react';
+import clsx from 'clsx';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import './styles.scss';
+import {SortMethodDirectionCollection, SortMethodTypesCollection} from '../../types/words-statistics';
+
 
 const StatisticPage: FC = (): ReactElement => {
-  const { wordsStatistics } = useTypedSelector((state) => ({
+  const {wordsStatistics, sortMethod} = useTypedSelector((state) => ({
     ...state.wordsStat
   }));
 
-  const { getWordsStat } = useActions();
+  const {getWordsStat, clearWordsStat, changeSortMethod} = useActions();
 
   useEffect(() => {
     getWordsStat();
@@ -20,29 +23,65 @@ const StatisticPage: FC = (): ReactElement => {
     return <p>there is no data...</p>
   }
 
+  const clickSortHandlerCreator = (sortType: SortMethodTypesCollection): () => void =>
+    () => {
+      const direction = sortMethod.direction === SortMethodDirectionCollection.DOWN
+        ? SortMethodDirectionCollection.UP : SortMethodDirectionCollection.DOWN
+
+      changeSortMethod({type: sortType, direction});
+    }
+
+  const clickOnCategoryHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_CATEGORY);
+  const clickOnWordHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_WORD);
+  const clickOnTranslationHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_TRANSLATION);
+  const clickOnTrainHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_TRAIN);
+  const clickOnCorrectHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_CORRECT);
+  const clickOnMistakeHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_MISTAKE);
+  const clickOnACPercentHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_ACPERSENT);
+
+
+  const sortArrow = <span className="statistics__sort-arrow">{sortMethod.direction === SortMethodDirectionCollection.DOWN ? '↓' : '↑'}</span>;
+
   return (
     <>
-    <div className="statistics-wrapper">
-      <table className="statistics">
-        <caption className="statistics__title">Statistics</caption>
-        <thead className="statistics__head">
+      <div className="statistics-wrapper">
+        <table className="statistics">
+          <caption className="statistics__title">Statistics</caption>
+          <thead className="statistics__head">
           <tr>
-            <th className="statistics__item">category</th>
-            <th className="statistics__item">word</th>
-            <th className="statistics__item">translation</th>
-            <th className="statistics__item statistics__item_train statistics__item_digit">
-              train
+            <th
+              className="statistics__item"
+              onClick={clickOnCategoryHandler}>category {sortMethod.type === SortMethodTypesCollection.BY_CATEGORY &&
+            sortArrow}
             </th>
-            <th className="statistics__item statistics__item_correct statistics__item_digit">
-              correct
+            <th className="statistics__item"
+                onClick={clickOnWordHandler}>word {sortMethod.type === SortMethodTypesCollection.BY_WORD &&
+            sortArrow}</th>
+            <th className="statistics__item"
+                onClick={clickOnTranslationHandler}>translation {sortMethod.type === SortMethodTypesCollection.BY_TRANSLATION &&
+            sortArrow}</th>
+            <th className="statistics__item statistics__item_train statistics__item_digit"
+                onClick={clickOnTrainHandler}>
+              train {sortMethod.type === SortMethodTypesCollection.BY_TRAIN &&
+            sortArrow}
             </th>
-            <th className="statistics__item statistics__item_mistake statistics__item_digit">
-              mistake
+            <th className="statistics__item statistics__item_correct statistics__item_digit"
+                onClick={clickOnCorrectHandler}>
+              correct {sortMethod.type === SortMethodTypesCollection.BY_CORRECT &&
+            sortArrow}
             </th>
-            <th className="statistics__item statistics__item_digit">%</th>
+            <th className="statistics__item statistics__item_mistake statistics__item_digit"
+                onClick={clickOnMistakeHandler}>
+              mistake {sortMethod.type === SortMethodTypesCollection.BY_MISTAKE &&
+            sortArrow}
+            </th>
+            <th className="statistics__item statistics__item_digit" onClick={clickOnACPercentHandler}>
+              % {sortMethod.type === SortMethodTypesCollection.BY_ACPERSENT &&
+            sortArrow}
+            </th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           {wordsStatistics.map((stat) => (
             <tr key={stat.id} className="statistics__row">
               <td className="statistics__item statistics__item_bold">
@@ -64,10 +103,10 @@ const StatisticPage: FC = (): ReactElement => {
               </td>
             </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
-    <button className="statistics-button" onClick={() => console.log('dedete')}>Clean</button>
+          </tbody>
+        </table>
+      </div>
+      <button className="statistics-button" onClick={clearWordsStat}>Clear</button>
     </>
   );
 };
