@@ -1,17 +1,17 @@
 import {FC, ReactElement, useEffect} from 'react';
-import clsx from 'clsx';
+import {RouteComponentProps} from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import './styles.scss';
 import {SortMethodDirectionCollection, SortMethodTypesCollection} from '../../types/words-statistics';
 
 
-const StatisticPage: FC = (): ReactElement => {
+const StatisticPage: FC<RouteComponentProps> = ({history}): ReactElement => {
   const {wordsStatistics, sortMethod} = useTypedSelector((state) => ({
     ...state.wordsStat
   }));
 
-  const {getWordsStat, clearWordsStat, changeSortMethod} = useActions();
+  const {getWordsStat, clearWordsStat, changeSortMethod, changeCategory} = useActions();
 
   useEffect(() => {
     getWordsStat();
@@ -39,8 +39,12 @@ const StatisticPage: FC = (): ReactElement => {
   const clickOnMistakeHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_MISTAKE);
   const clickOnACPercentHandler = clickSortHandlerCreator(SortMethodTypesCollection.BY_ACPERSENT);
 
-
   const sortArrow = <span className="statistics__sort-arrow">{sortMethod.direction === SortMethodDirectionCollection.DOWN ? '↓' : '↑'}</span>;
+
+  const trainHandler = (): void => {
+    changeCategory({id: -1, name: 'custom'});
+    history.push('/cards');
+  };
 
   return (
     <>
@@ -99,14 +103,17 @@ const StatisticPage: FC = (): ReactElement => {
                 {stat.missed}
               </td>
               <td className="statistics__item statistics__item_data statistics__item_digit">
-                {stat.correctAnswersPercent || '-'}
+                {stat.correctAnswersPercent === -1 ? '-' : stat.correctAnswersPercent}
               </td>
             </tr>
           ))}
           </tbody>
         </table>
       </div>
-      <button className="statistics-button" onClick={clearWordsStat}>Clear</button>
+      <div className="statistics-control-container">
+        <button className="statistics-button statistics-button_practice" onClick={trainHandler}>Train</button>
+        <button className="statistics-button" onClick={clearWordsStat}>Clear</button>
+      </div>
     </>
   );
 };

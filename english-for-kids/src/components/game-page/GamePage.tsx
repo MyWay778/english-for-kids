@@ -27,7 +27,7 @@ interface CardsParams {
 }
 
 const GamePage: FC = (): ReactElement => {
-  const { cards, gameMode, isLoading } = useTypedSelector((state) => ({
+  const { cards, gameMode, isLoading, currentCategory } = useTypedSelector((state) => ({
     ...state.game,
     ...state.app,
   }));
@@ -39,9 +39,10 @@ const GamePage: FC = (): ReactElement => {
     setIsLoading,
     updateSessionStat,
     saveSessionStat,
+    fetchCardsByIds,
   } = useActions();
   const history = useHistory();
-  const idFromParams = useParams<CardsParams>()?.id;
+  // const idFromParams = useParams<CardsParams>()?.id;
 
   const [shuffledCards, setShuffledCards] = useState<CardType[]>([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -51,19 +52,23 @@ const GamePage: FC = (): ReactElement => {
   const mayClickRef = useRef(false);
 
   useEffect(() => {
-    if (idFromParams) {
-      (async () => {
-        setIsLoading(true);
-        await fetchCards(Number(idFromParams));
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      })();
+    if (currentCategory) {
+      if (currentCategory.id > 0) {
+        (async () => {
+          setIsLoading(true);
+          await fetchCards(Number(currentCategory.id));
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        })();
+      } else if (currentCategory.id === -1) {
+        fetchCardsByIds();
+      }
     }
     return () => {
       saveSessionStat();
     };
-  }, [idFromParams]);
+  }, [currentCategory]);
 
   useEffect(() => {
     if (isGameStarted && !gameMode) {
@@ -160,6 +165,10 @@ const GamePage: FC = (): ReactElement => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (cards.length === 0) {
+    return <p>No data...</p>
   }
 
   return (

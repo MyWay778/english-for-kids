@@ -16,4 +16,16 @@ export default class CategoriesController {
       res.status(404).json({error: e.message});
     }
   }
+
+  static async apiGetWordsByIds(req: express.Request, res: express.Response) {
+    let {ids} = req.params;
+
+    if (ids) {
+      const wordIds = ids.split('&').map(wordId => Number(wordId));
+      const words = await CategoriesDAO.getWordsByIds(wordIds);
+      res.json(words);
+    } else {
+      res.sendStatus(401);
+    }
+  }
 }

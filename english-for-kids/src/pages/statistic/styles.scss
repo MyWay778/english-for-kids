@@ -83,19 +83,28 @@
 
 .statistics-button {
   @include mixins.iconBtn(20px, 20px, url('../static/icon/delete.svg'));
-  width: 85px;
+  width: auto;
   height: 35px;
   font-size: 16px;
   display: block;
-  margin-left: auto;
+  margin-left: 15px;
   background-size: 25px 25px;
   background-position: 8px;
-  padding-left: 30px;
+  padding: 5px 10px 5px 35px;
   margin-bottom: 15px;
   border-radius: 20px;
   transition: background-color 0.2s ease-in;
 
+  &_practice {
+    background-image: url("../../static/icon/dumbbell.svg");
+  }
+
   &:hover {
     background-color: rgba(0,0,0,.05);
   }
+}
+
+.statistics-control-container {
+  display: flex;
+  justify-content: flex-end;
 }

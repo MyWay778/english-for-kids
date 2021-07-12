@@ -1,5 +1,5 @@
 import categoriesData from '../data/categories';
-import {WordForStatType} from '../types/categories';
+import {CategoryType, WordForStatType, WordType} from '../types/categories';
 
 export default class CategoriesDAO {
   static async getCategories() {
@@ -33,5 +33,17 @@ export default class CategoriesDAO {
       }
     )
     return Promise.resolve(wordList);
+  }
+
+  static async getWordsByIds(wordIds: number[]): Promise<WordType[]> {
+    const words = categoriesData.reduce((words: WordType[], category: CategoryType): WordType[] => {
+      const foundWord = category.words.filter((word) => wordIds.includes(word.id));
+      if (foundWord) {
+        words.push(...foundWord);
+      }
+      return words;
+    }, []);
+
+    return Promise.resolve(words);
   }
 }

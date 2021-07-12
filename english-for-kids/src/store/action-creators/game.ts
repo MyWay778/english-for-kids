@@ -6,6 +6,7 @@ import {
   GameResultType,
 } from '../../types/game';
 import CategoryDataService from '../../api/category/category.service';
+import store from '../index';
 
 const setGameResult =
   (gameResult: GameResultType) =>
@@ -41,6 +42,26 @@ const fetchCards =
         console.error(e);
       }
     };
+
+const fetchCardsByIds =
+  () => async (dispatch: Dispatch<GameActions>): Promise<void> => {
+
+    const {wordsStatistics} = store.getState().wordsStat;
+    const cardsIds = wordsStatistics.filter(word => word.correctAnswersPercent >= 0)
+      .sort((firstWord, secondWord) => firstWord.correctAnswersPercent - secondWord.correctAnswersPercent)
+      .map(word => word.id)
+      .slice(0, 8);
+    if (cardsIds.length > 0) {
+      try {
+
+        const response = await CategoryDataService.getWordsByIds(cardsIds);
+        dispatch({type: GameActionsTypes.FETCH_CARDS, payload: response.data});
+
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
 
 export const changeCategory =
   (category: CurrentCategoryType) =>
@@ -83,6 +104,7 @@ const gameActionCreators = {
   fetchCards,
   changeCategory,
   fetchCategories,
+  fetchCardsByIds
   // saveWordsStatistic,
   // getWordsStatistic,
   // deleteWordsStatistic,

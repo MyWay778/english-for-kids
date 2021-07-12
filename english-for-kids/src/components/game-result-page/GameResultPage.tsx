@@ -45,11 +45,11 @@ const GameResultPage: FC = () => {
   }
 
   useEffect(() => {
-    playSound(sound);
+    playSound(sound, bodyClickHandler);
   }, []);
 
   return (
-    <div className="game-result" onClick={bodyClickHandler}>
+    <div className="game-result">
         <h2 className="game-result__primary">
           {congratulationsMessage}
         </h2>

@@ -38,15 +38,13 @@ const App: FC = (): ReactElement => {
           <Route exact path="/">
             <ChooseCategoryPage />
           </Route>
-          <Route path="/cards/:id">
+          <Route path="/cards">
             <GamePage />
           </Route>
           <Route exact path="/result">
             <GameResultPage />
           </Route>
-          <Route exact path="/statistic">
-            <StatisticPage />
-          </Route>
+          <Route exact path="/statistic" component={StatisticPage}/>
           <Route exact path="/admin" component={AdminPage}/>
         </Switch>
       </main>
