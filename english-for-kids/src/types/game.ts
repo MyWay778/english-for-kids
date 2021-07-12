@@ -1,7 +1,7 @@
 export interface GameState {
   gameResult: GameResultType | null;
   cards: CardType[];
-  wordsStatistic: WordsStatisticType;
+  // wordsStatistic: WordsStatisticType;
   categories: CategoryType[];
   currentCategory: CurrentCategoryType | null;
 }
@@ -26,25 +26,25 @@ export interface CardType {
   soundSrc: string;
 }
 
-export interface WordsStatisticType {
-  [K: string]: WordStatisticType;
-}
+// export interface WordsStatisticType {
+//   [K: string]: WordStatisticType;
+// }
+//
+// export interface WordStatisticType {
+//   categoryName: string;
+//   spelling: string;
+//   translating: string;
+//   clicksInTrain: number;
+//   guessed: number;
+//   missed: number;
+// }
 
-export interface WordStatisticType {
-  categoryName: string;
-  spelling: string;
-  translating: string;
-  clicksInTrain: number;
-  guessed: number;
-  missed: number;
-}
-
-export interface WordStatisticPropType {
-  id: string;
-  clicksInTrain?: number;
-  guessed?: number;
-  missed?: number;
-}
+// export interface WordStatisticPropType {
+//   id: string;
+//   clicksInTrain?: number;
+//   guessed?: number;
+//   missed?: number;
+// }
 
 export interface GameResultType {
   wrongAnswers: number;
@@ -82,35 +82,35 @@ interface FetchCardsAction {
   payload: CardType[];
 }
 
-export interface SetWordsStatistic {
-  type: GameActionsTypes.SET_WORDS_STATISTIC;
-  payload: WordsStatisticType;
-}
+// export interface SetWordsStatistic {
+//   type: GameActionsTypes.SET_WORDS_STATISTIC;
+//   payload: WordsStatisticType;
+// }
 
-export interface UpdateWordStatistic {
-  type: GameActionsTypes.UPDATE_WORDS_STATISTIC;
-  payload: WordStatisticPropType;
-}
+// export interface UpdateWordStatistic {
+//   type: GameActionsTypes.UPDATE_WORDS_STATISTIC;
+//   payload: WordStatisticPropType;
+// }
 
-export interface SaveWordStatistic {
-  type: GameActionsTypes.SAVE_WORDS_STATISTIC;
-}
+// export interface SaveWordStatistic {
+//   type: GameActionsTypes.SAVE_WORDS_STATISTIC;
+// }
 
-interface GetWordStatistic {
-  type: GameActionsTypes.GET_WORDS_STATISTIC;
-}
+// interface GetWordStatistic {
+//   type: GameActionsTypes.GET_WORDS_STATISTIC;
+// }
 
-interface DeleteWordStatistic {
-  type: GameActionsTypes.DELETE_WORDS_STATISTIC;
-}
+// interface DeleteWordStatistic {
+//   type: GameActionsTypes.DELETE_WORDS_STATISTIC;
+// }
 
 export type GameActions =
   | SetGameResultAction
-  | SetWordsStatistic
-  | UpdateWordStatistic
+  // | SetWordsStatistic
+  // | UpdateWordStatistic
   | FetchCardsAction
   | ChangeCategory
   | FetchCategories
-  | SaveWordStatistic
-  | GetWordStatistic
-  | DeleteWordStatistic;
+  // | SaveWordStatistic
+  // | GetWordStatistic
+  // | DeleteWordStatistic;

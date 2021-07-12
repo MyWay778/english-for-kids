@@ -15,6 +15,8 @@ import { CardType } from '../../types/game';
 const shuffleCards = (cards: CardType[]): CardType[] =>
   cards.concat().sort(() => Math.random() - 0.5);
 
+const CLICK = 1;
+
 interface UserAnswerType {
   id: number;
   type: 'right' | 'wrong';
@@ -35,8 +37,8 @@ const GamePage: FC = (): ReactElement => {
     setGameResult,
     setGameMode,
     setIsLoading,
-    updateWordsStatistic,
-    saveWordsStatistic,
+    updateSessionStat,
+    saveSessionStat,
   } = useActions();
   const history = useHistory();
   const idFromParams = useParams<CardsParams>()?.id;
@@ -59,7 +61,7 @@ const GamePage: FC = (): ReactElement => {
       })();
     }
     return () => {
-      saveWordsStatistic();
+      saveSessionStat();
     };
   }, [idFromParams]);
 
@@ -115,7 +117,7 @@ const GamePage: FC = (): ReactElement => {
       audio.volume = 0.2;
       audio.play();
     }
-    updateWordsStatistic({ id: String(cardId), clicksInTrain: 1 });
+    updateSessionStat({ id: cardId, clicksInTrain: CLICK });
   };
 
   const cardClickInGameModeHandler = (cardId: number) => {
@@ -133,7 +135,7 @@ const GamePage: FC = (): ReactElement => {
       setUserAnswers(
         userAnswers.concat({ id: userAnswers.length, type: 'right' })
       );
-      updateWordsStatistic({ id: String(shuffledCards[0].id), guessed: 1 });
+      updateSessionStat({ id: shuffledCards[0].id, guessed: CLICK });
       if (shuffledCards.length === 1) {
         finishGame();
         return;
@@ -151,7 +153,7 @@ const GamePage: FC = (): ReactElement => {
       setUserAnswers(
         userAnswers.concat({ id: userAnswers.length, type: 'wrong' })
       );
-      updateWordsStatistic({ id: String(shuffledCards[0].id), missed: 1 });
+      updateSessionStat({ id: shuffledCards[0].id, missed: CLICK });
     }
     mayClickRef.current = false;
   };

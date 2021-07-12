@@ -1,28 +1,22 @@
 import { FC, ReactElement, useEffect } from 'react';
-import calcPercentOfCorrectAnswers from '../../helpers/calcPercentOfCorrectAnswers';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import './styles.scss';
 
 const StatisticPage: FC = (): ReactElement => {
-  const { wordsStatistic } = useTypedSelector((state) => ({
-    ...state.game,
-    ...state.app,
+  const { wordsStatistics } = useTypedSelector((state) => ({
+    ...state.wordsStat
   }));
 
-  const { getWordsStatistic, setWordsStatistic, deleteWordsStatistic } = useActions();
+  const { getWordsStat } = useActions();
 
   useEffect(() => {
-    getWordsStatistic();
-    return () => {
-      setWordsStatistic({});
-    };
+    getWordsStat();
   }, []);
 
-  const wordsStatisticValues = Object.values(wordsStatistic);
-  console.log(wordsStatisticValues)
+  // const wordsStatisticValues = Object.values(wordsStatistic);
 
-  if (wordsStatisticValues.length === 0) {
+  if (wordsStatistics.length === 0) {
     return <p>there is no data...</p>
   }
 
@@ -49,8 +43,8 @@ const StatisticPage: FC = (): ReactElement => {
           </tr>
         </thead>
         <tbody>
-          {wordsStatisticValues.map((stat) => (
-            <tr key={stat.spelling} className="statistics__row">
+          {wordsStatistics.map((stat) => (
+            <tr key={stat.id} className="statistics__row">
               <td className="statistics__item statistics__item_bold">
                 {stat.categoryName}
               </td>
@@ -66,16 +60,14 @@ const StatisticPage: FC = (): ReactElement => {
                 {stat.missed}
               </td>
               <td className="statistics__item statistics__item_data statistics__item_digit">
-                {stat.guessed + stat.missed > 0
-                  ? calcPercentOfCorrectAnswers(stat.guessed, stat.missed)
-                  : '-'}
+                {stat.correctAnswersPercent || '-'}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <button className="statistics-button" onClick={deleteWordsStatistic}>Clean</button>
+    <button className="statistics-button" onClick={() => console.log('dedete')}>Clean</button>
     </>
   );
 };
