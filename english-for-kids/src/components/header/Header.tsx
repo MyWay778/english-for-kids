@@ -6,7 +6,7 @@ import './header.scss';
 
 const Header: FC = (): ReactElement => {
   const { openAsideMenu, setGameMode } = useActions();
-  const { gameMode } = useTypedSelector((state) => state.app);
+  const { gameMode, user } = useTypedSelector((state) => ({...state.app, ...state.auth}));
 
   const switchGameModeHandler = (): void => {
     setGameMode(!gameMode);
@@ -34,6 +34,7 @@ const Header: FC = (): ReactElement => {
           <span className="play-toggle__title play-toggle__title_on">Train</span>
         </span>
       </label>
+      {user && <span className="header-user-info"><span className="header-user-info__greeting">Hello, </span><span className="header-user-info__user-name">{user.name}!</span></span>}
     </header>
   );
 };

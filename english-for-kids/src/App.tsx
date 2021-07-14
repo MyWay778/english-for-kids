@@ -1,5 +1,5 @@
 import { FC, ReactElement, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header/Header';
 import AsideMenu from './components/aside-menu/AsideMenu';
 import ChooseCategoryPage from './components/choose-category-page/ChooseCategoryPage';
@@ -16,7 +16,7 @@ import AdminPage from './pages/admin';
 
 const App: FC = (): ReactElement => {
   const { fetchCategories, setIsLoading} = useActions();
-  const {isOpenModal} = useTypedSelector(state => state.app);
+  const {isOpenModal, authError, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
 
   useEffect(() => {
     (async () => {
@@ -26,12 +26,13 @@ const App: FC = (): ReactElement => {
     })()
   }, []);
 
+
   return (
     <BrowserRouter>
       <Header />
       <AsideMenu />
       { isOpenModal && <Modal>
-        <LoginForm/>
+        <LoginForm errorMessage={authError}/>
       </Modal>}
       <main className="main">
         <Switch>
@@ -45,7 +46,7 @@ const App: FC = (): ReactElement => {
             <GameResultPage />
           </Route>
           <Route exact path="/statistic" component={StatisticPage}/>
-          <Route exact path="/admin" component={AdminPage}/>
+          {user?.role === 'admin' ? <Route exact path="/admin" component={AdminPage}/> : <Redirect to="/"/>}
         </Switch>
       </main>
       <Footer/>

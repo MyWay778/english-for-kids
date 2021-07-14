@@ -1,8 +1,8 @@
-import {ResultType, UserType} from '../types/authorization';
+import {RequestAuthUserType, ResultType, UserType} from '../types/authorization';
 import {authTokens, users} from '../data/authorization';
 
 export default class AuthorizationDAO {
-  static async findUser(user: UserType): Promise<UserType> {
+  static async findUser(user: RequestAuthUserType): Promise<UserType> {
       const foundUser = users.find(dataUser => dataUser.login === user.login && dataUser.password === user.password);
 
       if (!foundUser) {

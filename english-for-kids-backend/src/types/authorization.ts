@@ -1,7 +1,13 @@
 export interface UserType {
   login: string;
+  name: string;
   password: string;
-  role?: 'admin';
+  role?: 'admin' | 'user';
+}
+
+export interface RequestAuthUserType {
+  login: string;
+  password: string;
 }
 
 export interface AuthTokensType {
