@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable arrow-body-style */
-/* eslint-disable no-console */
 import {FC, ReactElement, useMemo, useState, memo} from 'react';
 import {
   Form,
@@ -44,7 +41,7 @@ const InnerForm = (props: FormikProps<Values>): ReactElement => {
   return (
     <Form className="login-form__form" onSubmit={handleSubmit}>
       <div className="login-form__fields">
-        <div className="login-form__error">{status}</div>
+        <div className="login-form__error">{touched.login && errors.login}</div>
         <Field
           className="login-form__field"
           id="login"
@@ -55,8 +52,8 @@ const InnerForm = (props: FormikProps<Values>): ReactElement => {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <div className="login-form__error">{touched.login && errors.login}</div>
 
+        <div className="login-form__error">{touched.password && errors.password}</div>
         <Field
           className="login-form__field"
           id="password"
@@ -68,7 +65,7 @@ const InnerForm = (props: FormikProps<Values>): ReactElement => {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <div className="login-form__error">{touched.password && errors.password}</div>
+
       </div>
       <div className="login-form__control">
         <button
@@ -94,17 +91,11 @@ const InnerForm = (props: FormikProps<Values>): ReactElement => {
   );
 };
 
-interface LoginFormProps {
-  errorMessage?: string | null;
-}
-
-const LoginForm: FC<LoginFormProps> = memo(({errorMessage}): ReactElement => {
+const LoginForm: FC = (): ReactElement => {
   const [initialLogin, setInitialLogin] = useState({login: 'admin', password: '12345'});
   const {authorize} = useActions();
 
   const FormikForm = withFormik<FormProps, Values>({
-      mapPropsToStatus: (props) => errorMessage
-      ,
       mapPropsToValues: (props) => ({
         login: props.initialLogin || '',
         password: props.initialPassword || '',
@@ -115,10 +106,15 @@ const LoginForm: FC<LoginFormProps> = memo(({errorMessage}): ReactElement => {
       }),
       async handleSubmit(
         {login, password}: Values,
-        {props, setSubmitting, setErrors}
+        {props, setSubmitting, setErrors, setStatus}
       ) {
+
+        const setLoginError = (message: string): void => {
+          setErrors({login: message});
+        }
+
         try {
-          authorize({login, password});
+          authorize({login, password}, setLoginError);
         } catch (e) {
           console.log(e);
         }
@@ -132,6 +128,6 @@ const LoginForm: FC<LoginFormProps> = memo(({errorMessage}): ReactElement => {
       <FormikForm initialLogin={initialLogin.login} initialPassword={initialLogin.password}/>
     </div>
   );
-});
+};
 
 export default LoginForm;

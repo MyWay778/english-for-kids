@@ -1,69 +1,77 @@
-import {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import './styles.scss';
-import clsx from 'clsx';
 import CardList from '../card-list';
-import AdminCard from '../admin-card';
-import CardItem from '../card-item';
-import CardControl from '../card-control';
-import IconButton from '../icon-button';
-import SaveIcon from '../../static/icon/floppy-disk.svg';
-import CancelIcon from '../../static/icon/close.svg';
-import EditIcon from '../../static/icon/edit.svg';
-import DeleteIcon from '../../static/icon/delete.svg';
 import {CardType} from '../../types/game';
-import CardSound from '../card-sound';
-import CardSoundInput from '../card-sound-input';
 import CardAddItem from '../card-add-item';
+import AdminWordsCard from '../admin-words-card';
+import useActions from '../../hooks/useActions';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import {NewCardData} from '../../types/admin-panel';
+import ImagePlaceholder from '../../static/images/others/placeholder-image.png';
+
 
 interface AdminWordsListProps {
   words: CardType[];
   edit: boolean;
 }
 
-const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement =>
-  <CardList>
-    {words.map(word => (
-      <AdminCard key={word.id}>
-        <CardItem title="Word">
-          {edit ? (
-            <input className="admin-page-category-card-row--input" type='text' value={word.spelling}/>
-          ) : word.spelling}
-        </CardItem>
-        <CardItem title="Translation">
-          {edit ? (
-            <input className="admin-page-category-card-row--input" type='text' value={word.translating}/>
-          ) : word.translating}
-        </CardItem>
-        <CardItem title="Sound">
-          {edit ? <CardSoundInput title={'Choose file'}/> : <CardSound title={word.spelling} soundUrl={word.soundSrc}/>}
-        </CardItem>
-        <CardItem title="Image">
-          <label
-            className={clsx('admin-page-category-card-row-avatar-container', edit && 'admin-page-category-card-row-avatar-container_edit')}
-            htmlFor="admin-page-category-card-row--image-input">
-            <img className="admin-page-category-card-row--avatar" src={word.imageSrc} alt={word.spelling}/>
-          </label>
-          <input id="admin-page-category-card-row--image-input"
-                 className="admin-words-list-card--image-input" type="file" disabled={!edit}/>
-        </CardItem>
-        <CardControl>
-          {
-            edit ? (
-              <>
-                <IconButton title="Save" iconUrl={SaveIcon} color="tomato" fontWeight={600}/>
-                <IconButton title="Cancel" iconUrl={CancelIcon}/>
-              </>
-            ) : (
-              <>
-                <IconButton title="Edit" iconUrl={EditIcon}/>
-                <IconButton title="Delete" iconUrl={DeleteIcon} color="tomato" fontWeight={600}/>
-              </>
-            )
+interface AdminWordsListParams {
+  id: string;
+}
+
+const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement => {
+  const {fetchCards, setEditableWordId, editAdminWord, addWord} = useActions();
+  const {editableWordId} = useTypedSelector(state => state.adminPanel);
+
+  const [addMode, setAddMode] = useState(false);
+
+  const categoryId = useParams<AdminWordsListParams>().id;
+
+  useEffect(() => {
+    fetchCards(Number(categoryId));
+  }, []);
+
+  const clickCancelHandler = (): void => {
+    setEditableWordId(null);
+  };
+
+  const saveHandler = (() => (data: NewCardData): void => {
+    editAdminWord({...data, categoryId: Number(categoryId)});
+  })();
+
+  const clickAddCardHandler = (): void => {
+    setAddMode(true);
+  };
+
+  const clickCancelAddCardHandler = (): void => {
+    setAddMode(false);
+  };
+
+  const saveNewWordHandler = (() => (data: NewCardData): void => {
+      addWord({...data, categoryId: Number(categoryId)});
+      setAddMode(false);
+  })();
+
+  return (
+    <>
+      <h2 className="admin-page-title">Words</h2>
+      <CardList>
+        {words.map(word => {
+          const clickEditHandler = (): void => {
+            setEditableWordId(word.id);
           }
-        </CardControl>
-      </AdminCard>
-    ))}
-    <CardAddItem itemName="word"/>
-  </CardList>
+          const editable = word.id === editableWordId;
+
+          return <AdminWordsCard key={word.id} clickEditHandler={clickEditHandler} saveHandler={saveHandler}
+                                 cancelHandler={clickCancelHandler} word={word} editable={editable}/>
+        })}
+        {addMode ? <AdminWordsCard saveHandler={saveNewWordHandler}
+                                   cancelHandler={clickCancelAddCardHandler} word={{id:0, spelling: '', translating: '', imageSrc: ImagePlaceholder, soundSrc: ''}} editable={true}/> :
+          <CardAddItem onClick={clickAddCardHandler} itemName="word"/>}
+      </CardList>
+    </>
+  )
+}
 
 export default AdminWordsList;

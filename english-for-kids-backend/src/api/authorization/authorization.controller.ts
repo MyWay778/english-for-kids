@@ -16,7 +16,7 @@ export default class AuthorizationController {
 
       await AuthorizationDAO.saveAuthTokenWithUser(authToken, user);
 
-      res.cookie(AuthorizationConst.AUTH_TOKEN, authToken);
+      res.cookie(AuthorizationConst.AUTH_TOKEN, authToken,  { maxAge: 900000, httpOnly: true });
       res.json({result: 'success', name: user.name, role: user.role});
     } catch (e) {
       res.status(401).json({error: e.message});

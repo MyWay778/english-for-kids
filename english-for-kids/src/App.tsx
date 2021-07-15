@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
+import React, { FC, ReactElement, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header/Header';
 import AsideMenu from './components/aside-menu/AsideMenu';
@@ -15,24 +15,14 @@ import useTypedSelector from './hooks/useTypedSelector';
 import AdminPage from './pages/admin';
 
 const App: FC = (): ReactElement => {
-  const { fetchCategories, setIsLoading} = useActions();
-  const {isOpenModal, authError, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await fetchCategories();
-      setTimeout(setIsLoading.bind(null, false), 1000);
-    })()
-  }, []);
-
+  const {isOpenModal, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
 
   return (
     <BrowserRouter>
       <Header />
       <AsideMenu />
       { isOpenModal && <Modal>
-        <LoginForm errorMessage={authError}/>
+        <LoginForm/>
       </Modal>}
       <main className="main">
         <Switch>
@@ -46,7 +36,8 @@ const App: FC = (): ReactElement => {
             <GameResultPage />
           </Route>
           <Route exact path="/statistic" component={StatisticPage}/>
-          {user?.role === 'admin' ? <Route exact path="/admin" component={AdminPage}/> : <Redirect to="/"/>}
+          {user?.role === 'admin' ? <Route  path="/admin" component={AdminPage}/> : <Redirect to="/"/>}
+
         </Switch>
       </main>
       <Footer/>

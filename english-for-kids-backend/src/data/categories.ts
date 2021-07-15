@@ -1,4 +1,6 @@
-const categories = [
+import {CategoryType} from '../types/categories';
+
+const categories: CategoryType[] = [
   {
     id: 1,
     name: 'Action (set A)',

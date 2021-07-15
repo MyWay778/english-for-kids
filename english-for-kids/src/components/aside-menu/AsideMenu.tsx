@@ -16,11 +16,8 @@ const AsideMenu: FC = (): ReactElement => {
     ...state.game,
     ...state.auth,
   }));
-  const {closeAsideMenu, changeCategory, setIsOpenModal} =
+  const {closeAsideMenu, changeCategory, setIsOpenModal, logout} =
     useActions();
-
-  // TODO: implement
-  const logout = () => console.log('logout');
 
   const navClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;

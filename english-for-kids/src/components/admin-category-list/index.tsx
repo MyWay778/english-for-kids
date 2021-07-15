@@ -1,64 +1,64 @@
-import {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, SyntheticEvent, useState} from 'react';
+import {Link, useRouteMatch, useParams} from 'react-router-dom';
 import './styles.scss';
-import clsx from 'clsx';
 import CardList from '../card-list';
-import AdminCard from '../admin-card';
-import CardItem from '../card-item';
-import CardControl from '../card-control';
-import IconButton from '../icon-button';
-import SaveIcon from '../../static/icon/floppy-disk.svg';
-import CancelIcon from '../../static/icon/close.svg';
-import EditIcon from '../../static/icon/edit.svg';
-import WordsIcon from '../../static/icon/list.svg';
-import DeleteIcon from '../../static/icon/delete.svg';
-import {CategoryType} from '../../types/game';
 import CardAddItem from '../card-add-item';
+import useActions from '../../hooks/useActions';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import {AdminCategoryType} from '../../types/admin-panel';
+import AdminCategoryCard from '../admin-category-card';
+import {CategoryType} from '../../types/game';
 
 interface AdminCategoryListProps {
-  categories: CategoryType[];
+  categories: AdminCategoryType[];
   edit: boolean;
 }
 
-const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): ReactElement =>
-  <CardList>
-    {categories.map(category => (
-      <AdminCard key={category.id}>
-        <CardItem title="Name">
-          {edit ? (
-            <input className="admin-page-category-card-row--input" type='text' value={category.name}/>
-          ) : category.name}
-        </CardItem>
-        <CardItem title="Word count">
-          {category.wordCount}
-        </CardItem>
-        <CardItem title="Image">
-          <label
-            className={clsx('admin-page-category-card-row-avatar-container', edit && 'admin-page-category-card-row-avatar-container_edit')}
-            htmlFor="admin-page-category-card-row--image-input">
-            <img className="admin-page-category-card-row--avatar" src={category.imageSrc} alt={category.name}/>
-          </label>
-          <input id="admin-page-category-card-row--image-input"
-                 className="admin-page-category-card-row--image-input" type="file" disabled={!edit}/>
-        </CardItem>
-        <CardControl>
-          {
-            edit ? (
-              <>
-                <IconButton title="Save" iconUrl={SaveIcon} color="tomato" fontWeight={600}/>
-                <IconButton title="Cancel" iconUrl={CancelIcon}/>
-              </>
-            ) : (
-              <>
-                <IconButton title="Edit" iconUrl={EditIcon}/>
-                <IconButton title="Words" iconUrl={WordsIcon}/>
-                <IconButton title="Delete" iconUrl={DeleteIcon} color="tomato" fontWeight={600}/>
-              </>
-            )
+const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): ReactElement => {
+  const {setEditableCategoryId, editAdminCategory, addCategory} = useActions();
+  const {editableCategoryId} = useTypedSelector(state => ({...state.adminPanel}));
+
+  const [addMode, setAddMode] = useState(false);
+
+  const cancelHandler = (): void => {
+    setEditableCategoryId(null);
+  }
+
+  const addHandler = (): void => {
+    setAddMode(true);
+  }
+
+  const cancelAddHandler = (): void => {
+    setAddMode(false);
+  }
+
+  const saveAddHandler = (data: CategoryType): void => {
+    setAddMode(false);
+    addCategory(data);
+  }
+
+  return (
+    <>
+      <h2 className="admin-page-title">Categories</h2>
+      <CardList>
+        {categories.map(category => {
+
+            const clickEditHandler = (): void => {
+              setEditableCategoryId(category.id);
+            }
+            const editable = category.id === editableCategoryId;
+
+            return <AdminCategoryCard key={category.id} category={category} clickEditHandler={clickEditHandler}
+                                      cancelHandler={cancelHandler} saveHandler={editAdminCategory} editable={editable}/>
           }
-        </CardControl>
-      </AdminCard>
-    ))}
-    <CardAddItem itemName="category"/>
-  </CardList>
+        )}
+        {addMode ? <AdminCategoryCard category={{id: 0, name: `Category ${categories.length}`, imageSrc: '', wordCount: 0}} editable={true}
+                                      saveHandler={saveAddHandler}
+                                      cancelHandler={cancelAddHandler}/> :
+          <CardAddItem onClick={addHandler} itemName="category"/>}
+      </CardList>
+    </>
+  )
+}
 
 export default AdminCategoryList;

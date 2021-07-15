@@ -1,14 +1,20 @@
-import { FC, ReactElement } from 'react';
+import {FC, ReactElement, useEffect} from 'react';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import CategoryCard from '../category-card/CategoryCard';
 import Loader from '../loader';
 import './choose-category-page.scss';
+import useActions from '../../hooks/useActions';
 
 const ChooseCategoryPage: FC = (): ReactElement => {
   const { categories, gameMode, isLoading } = useTypedSelector((state) => ({...state.game, ...state.app}));
+  const { fetchCategories} = useActions();
   if (isLoading) {
     return <Loader/>
   }
+
+  useEffect(() => {
+    fetchCategories();
+  },[])
 
   return (
     <div className="category-container">
