@@ -64,6 +64,11 @@ export default class CategoriesDAO {
     return categoriesData.reduce((updatedCat, cat) => {
       if (cat.id === NewCategoryData.id) {
         cat.name = NewCategoryData.name;
+
+        if (NewCategoryData.imageFile) {
+          cat.imageSrc = NewCategoryData.imageFile;
+        }
+
         updatedCat = cat;
       }
       return updatedCat;

@@ -7,7 +7,7 @@ import AdminWordsList from '../../components/admin-words-list';
 import useActions from '../../hooks/useActions';
 
 
-const AdminPage: FC = (props): ReactElement => {
+const AdminPage: FC = (): ReactElement => {
   const {adminCategories, cards} = useTypedSelector(state => ({...state.adminPanel, ...state.auth, ...state.game}));
   const{fetchAdminCategories} = useActions();
   const {path} = useRouteMatch();
@@ -15,9 +15,6 @@ const AdminPage: FC = (props): ReactElement => {
   useEffect(() => {
     fetchAdminCategories();
   }, []);
-
-  const edit = true;
-  const page = 'words';
 
   return (
     <div className="admin-page">

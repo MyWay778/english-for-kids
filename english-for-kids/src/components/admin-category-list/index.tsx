@@ -5,9 +5,9 @@ import CardList from '../card-list';
 import CardAddItem from '../card-add-item';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import {AdminCategoryType} from '../../types/admin-panel';
+import {AdminCategoryType, NewCategoryData} from '../../types/admin-panel';
 import AdminCategoryCard from '../admin-category-card';
-import {CategoryType} from '../../types/game';
+import ImagePlaceholder from '../../static/images/others/placeholder-image.png';
 
 interface AdminCategoryListProps {
   categories: AdminCategoryType[];
@@ -32,7 +32,7 @@ const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): Reac
     setAddMode(false);
   }
 
-  const saveAddHandler = (data: CategoryType): void => {
+  const saveAddHandler = (data: NewCategoryData): void => {
     setAddMode(false);
     addCategory(data);
   }
@@ -52,7 +52,7 @@ const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): Reac
                                       cancelHandler={cancelHandler} saveHandler={editAdminCategory} editable={editable}/>
           }
         )}
-        {addMode ? <AdminCategoryCard category={{id: 0, name: `Category ${categories.length}`, imageSrc: '', wordCount: 0}} editable={true}
+        {addMode ? <AdminCategoryCard category={{id: 0, name: `Category ${categories.length}`, imageSrc: ImagePlaceholder, wordCount: 0}} editable={true}
                                       saveHandler={saveAddHandler}
                                       cancelHandler={cancelAddHandler}/> :
           <CardAddItem onClick={addHandler} itemName="category"/>}

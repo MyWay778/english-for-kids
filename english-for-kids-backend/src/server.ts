@@ -8,10 +8,13 @@ import statRouter from './api/statistics/statistics.router';
 
 const app = express();
 
-app.use(cors({credentials: true, origin: "http://localhost:3000"}));
+const origin = "http://localhost:3000";
+
+app.use(cors({credentials: true, origin}));
 app.use(cookieParser());
 app.use(express.json());
 
+app.use('/resources', express.static('./uploads'));
 app.use('/api/categories/', categoriesRouter);
 app.use('/api/login/', authorizationRouter);
 app.use('/api/admin/', adminRouter);
