@@ -87,6 +87,7 @@ export default class CategoriesDAO {
       if (words[i].id === NewWordData.wordId) {
         words[i].spelling = NewWordData.spelling;
         words[i].translating = NewWordData.translating;
+        words[i].imageSrc = NewWordData.imageFile || words[i].imageSrc;
         word = words[i];
       }
     }
@@ -110,16 +111,56 @@ export default class CategoriesDAO {
     if (words.length >= 8) {
       return Promise.reject(new Error('Maximum eight words per category'));
     }
-    const {translating, spelling} = word;
+    const {translating, spelling, imageFile} = word;
 
     const newWord: WordType = {
-      id: words.length,
+      id: words.length + 1,
       spelling,
       translating,
-      imageSrc: '',
+      imageSrc: imageFile || '',
       soundSrc: '',
     }
     words.push(newWord);
     return Promise.resolve(newWord);
+  }
+
+  static async updateWordAudio(categoryId: number, wordId: number, audioUrl: string): Promise<WordType> {
+    const category = categories.find(category => category.id === categoryId);
+    if(!category) {
+      return Promise.reject();
+    }
+
+    const word = category.words.find(word => word.id === wordId);
+    if (!word) {
+      return Promise.reject();
+    }
+    word.soundSrc = audioUrl;
+
+    return Promise.resolve(word);
+  }
+
+  static async deleteCategory(id: number): Promise<void> {
+    const catIndex = categories.findIndex(category => category.id === id);
+    if (!catIndex) {
+      return Promise.reject();
+    }
+
+    categories.splice(catIndex,1);
+    return Promise.resolve();
+  }
+
+  static async deleteWord(categoryId: number, wordId: number): Promise<void> {
+    const category = categories.find(category => category.id === categoryId);
+    if (!category) {
+      return Promise.reject();
+    }
+    const {words} = category;
+    const wordIndex = words.findIndex(word => word.id === wordId);
+    if (wordIndex < 0) {
+      return Promise.reject();
+    }
+
+    words.splice(wordIndex, 1);
+    return Promise.resolve();
   }
 }

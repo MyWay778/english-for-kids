@@ -12,8 +12,8 @@ import EditIcon from '../../static/icon/edit.svg';
 import WordsIcon from '../../static/icon/list.svg';
 import DeleteIcon from '../../static/icon/delete.svg';
 import {AdminCategoryType, NewCategoryData} from '../../types/admin-panel';
-import {CategoryType} from '../../types/game';
 import ImagePlaceholder from '../../static/images/others/placeholder-image.png';
+
 
 interface AdminCategoryCardProps {
   category: AdminCategoryType;
@@ -21,9 +21,10 @@ interface AdminCategoryCardProps {
   clickEditHandler?: () => void;
   saveHandler: (data: NewCategoryData) => void;
   cancelHandler: () => void;
+  deleteHandler?: (categoryId: number) => void;
 }
 
-const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandler, cancelHandler, saveHandler, editable = false}): ReactElement => {
+const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandler, cancelHandler, saveHandler, deleteHandler, editable = false}): ReactElement => {
   const [name, setName] = useState(category.name);
 
   const [imageFile, setImageFile] = useState<string>();
@@ -35,12 +36,12 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
   }
 
   const clickSaveHandler = (): void => {
-    saveHandler({id: category.id,name, imageFile});
+    saveHandler({id: category.id, name, imageFile});
   }
 
   const changeImageHandler = (e: SyntheticEvent<HTMLInputElement>): void => {
     const target = e.target as HTMLInputElement;
-    if (target.files && target.files.length === 0) {
+    if (!target.files || target.files.length === 0) {
       return
     }
 
@@ -48,8 +49,8 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
     reader.onload = (evt): void => {
       const image = imageRef.current;
       if (image) {
-        if ( evt.target && typeof evt.target.result  === 'string') {
-          image.src =  evt.target.result;
+        if (evt.target && typeof evt.target.result === 'string') {
+          image.src = evt.target.result;
           setImageFile(evt.target.result);
         }
       }
@@ -57,6 +58,12 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
 
     if (target.files) {
       reader.readAsDataURL(target.files[0]);
+    }
+  }
+
+  const clickDeleteHandler = () => {
+    if (deleteHandler) {
+      deleteHandler(category.id);
     }
   }
 
@@ -74,9 +81,11 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
         <label
           className={clsx('admin-page-category-card-row-avatar-container', editable && 'admin-page-category-card-row-avatar-container_edit')}
         >
-          <img className="admin-page-category-card-row--avatar" ref={imageRef} src={category.imageSrc || ImagePlaceholder} alt={category.name}/>
+          <img className="admin-page-category-card-row--avatar" ref={imageRef}
+               src={category.imageSrc || ImagePlaceholder} alt={category.name}/>
           <input onChange={changeImageHandler}
-            className="admin-page-category-card-row--image-input" type="file" accept="image/*" disabled={!editable}/>
+                 className="admin-page-category-card-row--image-input" type="file" accept="image/*"
+                 disabled={!editable}/>
         </label>
 
       </CardItem>
@@ -94,7 +103,7 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
                 <img className="icon-button--icon" src={WordsIcon} alt='words'/>
                 <span className="icon-button--title">Words</span>
               </Link>
-              <IconButton title="Delete" iconUrl={DeleteIcon} color="tomato" fontWeight={600}/>
+              <IconButton title="Delete" iconUrl={DeleteIcon} color="tomato"  onClick={clickDeleteHandler} fontWeight={600}/>
             </>
           )
         }

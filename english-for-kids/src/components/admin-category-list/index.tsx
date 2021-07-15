@@ -15,7 +15,7 @@ interface AdminCategoryListProps {
 }
 
 const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): ReactElement => {
-  const {setEditableCategoryId, editAdminCategory, addCategory} = useActions();
+  const {setEditableCategoryId, editAdminCategory, addCategory, deleteCategory} = useActions();
   const {editableCategoryId} = useTypedSelector(state => ({...state.adminPanel}));
 
   const [addMode, setAddMode] = useState(false);
@@ -49,12 +49,15 @@ const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): Reac
             const editable = category.id === editableCategoryId;
 
             return <AdminCategoryCard key={category.id} category={category} clickEditHandler={clickEditHandler}
-                                      cancelHandler={cancelHandler} saveHandler={editAdminCategory} editable={editable}/>
+                                      deleteHandler={deleteCategory} cancelHandler={cancelHandler}
+                                      saveHandler={editAdminCategory} editable={editable}/>
           }
         )}
-        {addMode ? <AdminCategoryCard category={{id: 0, name: `Category ${categories.length}`, imageSrc: ImagePlaceholder, wordCount: 0}} editable={true}
-                                      saveHandler={saveAddHandler}
-                                      cancelHandler={cancelAddHandler}/> :
+        {addMode ? <AdminCategoryCard
+            category={{id: 0, name: `Category ${categories.length}`, imageSrc: ImagePlaceholder, wordCount: 0}}
+            editable={true}
+            saveHandler={saveAddHandler} deleteHandler={deleteCategory}
+            cancelHandler={cancelAddHandler}/> :
           <CardAddItem onClick={addHandler} itemName="category"/>}
       </CardList>
     </>

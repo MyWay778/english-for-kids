@@ -21,7 +21,7 @@ interface AdminWordsListParams {
 }
 
 const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement => {
-  const {fetchCards, setEditableWordId, editAdminWord, addWord} = useActions();
+  const {fetchCards, setEditableWordId, editAdminWord, addWord, deleteWord} = useActions();
   const {editableWordId} = useTypedSelector(state => state.adminPanel);
 
   const [addMode, setAddMode] = useState(false);
@@ -37,7 +37,7 @@ const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement =>
   };
 
   const saveHandler = (() => (data: NewCardData): void => {
-    editAdminWord({...data, categoryId: Number(categoryId)});
+    editAdminWord({...data, categoryId: Number(categoryId)},);
   })();
 
   const clickAddCardHandler = (): void => {
@@ -49,9 +49,13 @@ const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement =>
   };
 
   const saveNewWordHandler = (() => (data: NewCardData): void => {
-      addWord({...data, categoryId: Number(categoryId)});
-      setAddMode(false);
+    addWord({...data, categoryId: Number(categoryId)});
+    setAddMode(false);
   })();
+
+  const deleteHandler = (wordId: number) => {
+    deleteWord(Number(categoryId), wordId);
+  }
 
   return (
     <>
@@ -64,10 +68,17 @@ const AdminWordsList: FC<AdminWordsListProps> = ({words, edit}): ReactElement =>
           const editable = word.id === editableWordId;
 
           return <AdminWordsCard key={word.id} clickEditHandler={clickEditHandler} saveHandler={saveHandler}
-                                 cancelHandler={clickCancelHandler} word={word} editable={editable}/>
+                                 deleteHandler={deleteHandler} cancelHandler={clickCancelHandler} word={word}
+                                 editable={editable}/>
         })}
         {addMode ? <AdminWordsCard saveHandler={saveNewWordHandler}
-                                   cancelHandler={clickCancelAddCardHandler} word={{id:0, spelling: '', translating: '', imageSrc: ImagePlaceholder, soundSrc: ''}} editable={true}/> :
+                                   cancelHandler={clickCancelAddCardHandler} word={{
+            id: 0,
+            spelling: '',
+            translating: '',
+            imageSrc: ImagePlaceholder,
+            soundSrc: ''
+          }} editable={true}/> :
           <CardAddItem onClick={clickAddCardHandler} itemName="word"/>}
       </CardList>
     </>

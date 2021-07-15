@@ -9,4 +9,5 @@ export interface NewWordDataType {
   wordId: number;
   spelling: string;
   translating: string;
+  imageFile?: string;
 }

@@ -46,11 +46,21 @@ export default class AdminController {
   static async editWord(req: express.Request, res: express.Response) {
     const user = req.user;
     const newWordData: NewWordDataType = req.body;
-    if (!newWordData.spelling || !newWordData.spelling || !newWordData.wordId) {
+    if (!newWordData.spelling || !newWordData.translating || newWordData.wordId === undefined) {
       res.sendStatus(400);
       return;
     }
     if (user.role === 'admin') {
+
+      if (newWordData.imageFile) {
+        try {
+          const imageUrl = await writeImageLocal(newWordData.imageFile, `category-${newWordData.spelling}`);
+          newWordData.imageFile = imageUrl;
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
       const updatedWord = await CategoriesDAO.editWord(newWordData);
       res.json(updatedWord);
     } else {
@@ -95,11 +105,81 @@ export default class AdminController {
       return;
     }
     const data: NewWordDataType = req.body;
+
+    if (data.imageFile) {
+        try {
+          const imageUrl = await writeImageLocal(data.imageFile, `category-${data.spelling}`);
+          data.imageFile = imageUrl;
+        } catch (e) {
+          console.log(e);
+        }
+    }
+
     try {
       const newWord = await CategoriesDAO.addWord(data);
       res.json(newWord);
     } catch (e) {
       res.status(500).json({error: e.message});
     }
+  }
+
+  static async saveAudio(req: express.Request, res: express.Response) {
+    const {file} = req;
+    const {categoryId, wordId} = req.body;
+    if (!categoryId || !wordId) {
+      res.sendStatus(400);
+      return;
+    }
+
+    if (file) {
+      const url = `${baseURL}/resources/audio/${file.filename}`;
+
+      try{
+        const updatedWord = await CategoriesDAO.updateWordAudio(Number(categoryId), Number(wordId), url);
+
+        res.json({url: updatedWord.soundSrc});
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      res.sendStatus(500);
+    }
+  }
+
+  static async deleteCategory(req: express.Request, res: express.Response) {
+    const user = req.user;
+    if (user.role !== 'admin') {
+      res.sendStatus(401);
+      return;
+    }
+
+    const {id} = req.query;
+    if (id) {
+      const result = CategoriesDAO.deleteCategory(Number(id));
+      res.sendStatus(200);
+      return;
+    }
+    res.sendStatus(400);
+  }
+
+  static async deleteWord(req: express.Request, res: express.Response) {
+    const user = req.user;
+    if (user.role !== 'admin') {
+      res.sendStatus(401);
+      return;
+    }
+
+    const {categoryId, wordId} = req.query;
+    // console.log(req.query);
+    if (categoryId && wordId) {
+      try {
+        const result = CategoriesDAO.deleteWord(Number(categoryId), Number(wordId));
+        res.sendStatus(200);
+        return;
+    } catch (e) {
+        res.sendStatus(500);
+      }
+    }
+    res.sendStatus(400);
   }
 }
