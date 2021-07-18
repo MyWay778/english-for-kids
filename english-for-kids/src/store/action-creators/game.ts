@@ -7,30 +7,13 @@ import {
 } from '../../types/game';
 import CategoryDataService from '../../api/category/category.service';
 import store from '../index';
+import {AppStateActions, AppStateActionTypes} from '../../types/app';
 
 const setGameResult =
   (gameResult: GameResultType) =>
     (dispatch: Dispatch<GameActions>): void => {
       dispatch({type: GameActionsTypes.SET_GAME_RESULT, payload: gameResult});
     };
-
-// export const setWordsStatistic =
-//   (wordsStatistic: WordsStatisticType) =>
-//     (dispatch: Dispatch<GameActions>): void => {
-//       dispatch({
-//         type: GameActionsTypes.SET_WORDS_STATISTIC,
-//         payload: wordsStatistic,
-//       });
-//     };
-
-// export const updateWordsStatistic =
-//   (newWordData: WordStatisticPropType) =>
-//     (dispatch: Dispatch<GameActions>): void => {
-//       dispatch({
-//         type: GameActionsTypes.UPDATE_WORDS_STATISTIC,
-//         payload: newWordData,
-//       });
-//     };
 
 const fetchCards =
   (categoryId: number) =>
@@ -71,43 +54,22 @@ export const changeCategory =
 
 export const fetchCategories =
   () =>
-    async (dispatch: Dispatch<GameActions>): Promise<void> => {
+    async (dispatch: Dispatch<GameActions | AppStateActions>): Promise<void> => {
+      dispatch({type: AppStateActionTypes.SET_IS_LOADING, payload: true});
       const categories = await CategoryDataService.getAll();
       dispatch({
         type: GameActionsTypes.FETCH_CATEGORIES,
         payload: categories.data,
       });
+      dispatch({type: AppStateActionTypes.SET_IS_LOADING, payload: false});
     };
-
-// const saveWordsStatistic =
-//   () =>
-//     (dispatch: Dispatch<GameActions>): void => {
-//       dispatch({type: GameActionsTypes.SAVE_WORDS_STATISTIC});
-//     };
-
-// const getWordsStatistic =
-//   () =>
-//     (dispatch: Dispatch<GameActions>): void => {
-//       dispatch({type: GameActionsTypes.GET_WORDS_STATISTIC});
-//     };
-
-// const deleteWordsStatistic =
-//   () =>
-//     (dispatch: Dispatch<GameActions>): void => {
-//       dispatch({type: GameActionsTypes.DELETE_WORDS_STATISTIC});
-//     };
 
 const gameActionCreators = {
   setGameResult,
-  // setWordsStatistic,
-  // updateWordsStatistic,
   fetchCards,
   changeCategory,
   fetchCategories,
   fetchCardsByIds
-  // saveWordsStatistic,
-  // getWordsStatistic,
-  // deleteWordsStatistic,
 };
 
 export default gameActionCreators;

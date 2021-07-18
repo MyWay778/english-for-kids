@@ -8,13 +8,14 @@ import useActions from '../../hooks/useActions';
 const ChooseCategoryPage: FC = (): ReactElement => {
   const { categories, gameMode, isLoading } = useTypedSelector((state) => ({...state.game, ...state.app}));
   const { fetchCategories} = useActions();
-  if (isLoading) {
-    return <Loader/>
-  }
 
   useEffect(() => {
     fetchCategories();
   },[])
+
+  if (isLoading) {
+    return <Loader/>
+  }
 
   return (
     <div className="category-container">
