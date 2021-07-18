@@ -133,7 +133,7 @@ export default class AdminController {
 
     if (file) {
       const url = `${baseURL}/resources/audio/${file.filename}`;
-
+      console.log('FILE ', file);
       try{
         const updatedWord = await CategoriesDAO.updateWordAudio(Number(categoryId), Number(wordId), url);
 
@@ -142,7 +142,7 @@ export default class AdminController {
         console.log(e);
       }
     } else {
-      res.sendStatus(500);
+      res.sendStatus(500).json({file});
     }
   }
 

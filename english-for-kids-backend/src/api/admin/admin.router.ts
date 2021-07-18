@@ -1,16 +1,17 @@
 import {Router} from 'express';
 import multer from 'multer';
+import path from 'path';
 import AdminController from './admin.controller';
 import authenticateByToken from '../../middleware/authenticateByToken';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/audio')
+    cb(null, './uploads/audio');
   },
   filename: function (req, file, cb) {
     let extArray = file.mimetype.split("/");
     let extension = extArray[extArray.length - 1];
-    cb(null, file.fieldname + '-' + Date.now()+ '.' +extension)
+    cb(null, file.fieldname + '-' + new Date().toISOString().replace(/:/g, '-')+ '.' +extension)
   }
 })
 

@@ -16,6 +16,11 @@ import AdminPage from './pages/admin';
 
 const App: FC = (): ReactElement => {
   const {isOpenModal, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
+  const {identify} = useActions();
+
+  useEffect(() => {
+    identify();
+  }, []);
 
   return (
     <BrowserRouter>

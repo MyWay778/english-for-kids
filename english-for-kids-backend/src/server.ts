@@ -8,9 +8,9 @@ import statRouter from './api/statistics/statistics.router';
 
 const app = express();
 
-const origin = "http://localhost:3000";
+const origins = ["https://eloquent-shirley-c139d2.netlify.app", "http://localhost:3000"];
 
-app.use(cors({credentials: true, origin}));
+app.use(cors({credentials: true, origin: origins}));
 app.use(cookieParser());
 app.use(express.json());
 

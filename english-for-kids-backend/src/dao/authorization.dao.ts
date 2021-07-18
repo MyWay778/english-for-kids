@@ -25,4 +25,13 @@ export default class AuthorizationDAO {
     const user = authTokens[authToken];
     return Promise.resolve(user || null);
   }
+
+  static async logout(authToken: string): Promise<void> {
+    const user = authTokens[authToken];
+    if (user) {
+      delete authTokens[authToken];
+      return Promise.resolve();
+    }
+    return Promise.resolve();
+  }
 }
