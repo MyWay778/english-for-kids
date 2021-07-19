@@ -1,10 +1,10 @@
 .admin-page-categories-list {
+  max-width: 610px;
   display: flex;
   justify-content: center;
   column-gap: 25px;
   row-gap: 25px;
   list-style-type: none;
   flex-wrap: wrap;
-  margin-top: 35px;
-  margin-bottom: 25px;
+  margin: 35px auto 25px;
 }

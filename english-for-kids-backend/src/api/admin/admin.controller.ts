@@ -1,8 +1,7 @@
 import express from "express";
-import {decode} from 'node-base64-image';
 import CategoriesDAO from '../../dao/categories.dao';
 import {NewCategoryDataType, NewWordDataType} from '../../types/admin';
-import {CategoryType, WordType} from '../../types/categories';
+import {CategoryType} from '../../types/categories';
 import {baseURL} from '../../index';
 import writeImageLocal from '../../helpers/writeImageLocal';
 
@@ -10,12 +9,19 @@ import writeImageLocal from '../../helpers/writeImageLocal';
 export default class AdminController {
   static async getCategories(req: express.Request, res: express.Response) {
     const user = req.user;
-    if (user.role === 'admin') {
-      const categories = await CategoriesDAO.getCategoriesForAdmin();
-      res.json(categories);
-    } else {
+    if (user.role !== 'admin') {
       res.sendStatus(401);
+      return;
     }
+
+    const {currentPage, categoryLimit} = req.query;
+
+    const {categories, count} = await CategoriesDAO.getCategoriesForAdmin(Number(currentPage), Number(categoryLimit));
+    res.set({
+      'Access-Control-Expose-Headers': 'X-Total-Count',
+      'X-Total-Count': count
+    });
+    res.json(categories);
   }
 
   static async editCategory(req: express.Request, res: express.Response) {
@@ -74,7 +80,7 @@ export default class AdminController {
       res.sendStatus(401);
       return;
     }
-    const data: NewCategoryDataType  = req.body;
+    const data: NewCategoryDataType = req.body;
     if (!data.name) {
       res.sendStatus(400);
     }
@@ -107,12 +113,12 @@ export default class AdminController {
     const data: NewWordDataType = req.body;
 
     if (data.imageFile) {
-        try {
-          const imageUrl = await writeImageLocal(data.imageFile, `category-${data.spelling}`);
-          data.imageFile = imageUrl;
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        const imageUrl = await writeImageLocal(data.imageFile, `category-${data.spelling}`);
+        data.imageFile = imageUrl;
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     try {
@@ -134,7 +140,7 @@ export default class AdminController {
     if (file) {
       const url = `${baseURL}/resources/audio/${file.filename}`;
       console.log('FILE ', file);
-      try{
+      try {
         const updatedWord = await CategoriesDAO.updateWordAudio(Number(categoryId), Number(wordId), url);
 
         res.json({url: updatedWord.soundSrc});
@@ -176,7 +182,7 @@ export default class AdminController {
         const result = CategoriesDAO.deleteWord(Number(categoryId), Number(wordId));
         res.sendStatus(200);
         return;
-    } catch (e) {
+      } catch (e) {
         res.sendStatus(500);
       }
     }

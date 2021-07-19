@@ -9,8 +9,14 @@ export interface CategoryType {
   id: number;
   name: string,
   imageSrc: string;
-  wordCount?: number;
   words: WordType[];
+}
+
+export interface AdminCategoryType {
+  id: number;
+  name: string,
+  imageSrc: string;
+  wordCount: number;
 }
 
 export interface WordType {

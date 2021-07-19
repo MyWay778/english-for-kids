@@ -1,5 +1,5 @@
 import categoriesData from '../data/categories';
-import {CategoryType, WordForStatType, WordType} from '../types/categories';
+import {AdminCategoryType, CategoryType, WordForStatType, WordType} from '../types/categories';
 import {NewCategoryDataType, NewWordDataType} from '../types/admin';
 import generateId from '../helpers/generateId';
 import categories from '../data/categories';
@@ -50,14 +50,23 @@ export default class CategoriesDAO {
     return Promise.resolve(words);
   }
 
-  static async getCategoriesForAdmin() {
-    const categories = categoriesData.map(category => ({
+  static async getCategoriesForAdmin(currentPage?: number, categoryLimit?: number): Promise<{ categories: AdminCategoryType[], count: number }> {
+    let categories: AdminCategoryType[] = categoriesData.map(category => ({
       id: category.id,
       name: category.name,
       imageSrc: category.imageSrc,
       wordCount: category.words.length,
     }));
-    return Promise.resolve(categories);
+
+    const count = categories.length;
+
+    if (currentPage && categoryLimit) {
+      const startRange = (currentPage * categoryLimit) - categoryLimit;
+      const finishRange = startRange + (categoryLimit);
+      categories = categories.slice(startRange, finishRange);
+    }
+
+    return Promise.resolve({categories, count});
   }
 
   static async editCategory(NewCategoryData: NewCategoryDataType): Promise<CategoryType | {}> {
@@ -126,7 +135,7 @@ export default class CategoriesDAO {
 
   static async updateWordAudio(categoryId: number, wordId: number, audioUrl: string): Promise<WordType> {
     const category = categories.find(category => category.id === categoryId);
-    if(!category) {
+    if (!category) {
       return Promise.reject();
     }
 
@@ -145,7 +154,7 @@ export default class CategoriesDAO {
       return Promise.reject();
     }
 
-    categories.splice(catIndex,1);
+    categories.splice(catIndex, 1);
     return Promise.resolve();
   }
 
