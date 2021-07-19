@@ -12,8 +12,8 @@ const AdminPage: FC = (): ReactElement => {
   return (
     <div className="admin-page">
       <Switch>
-        <Route exact path={path} render={() => <AdminCategoryList edit={false} categories={adminCategories}/>}/>
-        <Route path={`${path}/category/:id`} render={() => <AdminWordsList edit={false} words={cards}/>}/>
+        <Route exact path={path} render={() => <AdminCategoryList categories={adminCategories}/>}/>
+        <Route path={`${path}/category/:id`} render={() => <AdminWordsList words={cards}/>}/>
       </Switch>
     </div>
   );

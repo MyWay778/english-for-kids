@@ -11,10 +11,9 @@ import Loader from '../loader';
 
 interface AdminCategoryListProps {
   categories: AdminCategoryType[];
-  edit: boolean;
 }
 
-const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): ReactElement => {
+const AdminCategoryList: FC<AdminCategoryListProps> = ({categories}): ReactElement => {
   const {setEditableCategoryId, editAdminCategory, addCategory, deleteCategory, fetchAdminCategories, cleanupAdminCategoryList} = useActions();
   const {editableCategoryId, isLoading} = useTypedSelector(state => ({...state.adminPanel}));
   const [addMode, setAddMode] = useState(false);
@@ -26,11 +25,6 @@ const AdminCategoryList: FC<AdminCategoryListProps> = ({categories, edit}): Reac
       if (observer.current) {
         observer.current.disconnect();
       }
-      const option: IntersectionObserverInit = {
-        root: null,
-        rootMargin: '-50px',
-        threshold: 1.0
-      };
       observer.current = new IntersectionObserver((entries => {
         if (entries[0].isIntersecting) {
           fetchAdminCategories();
