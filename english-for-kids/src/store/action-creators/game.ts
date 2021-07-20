@@ -64,12 +64,17 @@ export const fetchCategories =
       dispatch({type: AppStateActionTypes.SET_IS_LOADING, payload: false});
     };
 
+export const cleanupCategories = () => (dispatch: Dispatch): void => {
+  dispatch({type:GameActionsTypes.FETCH_CATEGORIES, payload: []});
+}
+
 const gameActionCreators = {
   setGameResult,
   fetchCards,
   changeCategory,
   fetchCategories,
-  fetchCardsByIds
+  fetchCardsByIds,
+  cleanupCategories,
 };
 
 export default gameActionCreators;

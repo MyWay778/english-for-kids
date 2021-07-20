@@ -67,7 +67,7 @@ const AdminCategoryList: FC<AdminCategoryListProps> = ({categories}): ReactEleme
             saveHandler={saveAddHandler} deleteHandler={deleteCategory}
             cancelHandler={cancelAddHandler}/> :
           <CardAddItem onClick={addHandler} itemName="category"/>}
-        {categories.map((category, index) => {
+        {categories.map((category) => {
 
             const clickEditHandler = (): void => {
               setEditableCategoryId(category.id);

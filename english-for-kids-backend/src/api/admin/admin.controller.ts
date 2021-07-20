@@ -9,7 +9,7 @@ import writeImageLocal from '../../helpers/writeImageLocal';
 export default class AdminController {
   static async getCategories(req: express.Request, res: express.Response) {
     const user = req.user;
-    if (user.role !== 'admin') {
+    if (!user || user.role !== 'admin') {
       res.sendStatus(401);
       return;
     }

@@ -13,6 +13,7 @@ import WordsIcon from '../../static/icon/list.svg';
 import DeleteIcon from '../../static/icon/delete.svg';
 import {AdminCategoryType, NewCategoryData} from '../../types/admin-panel';
 import ImagePlaceholder from '../../static/images/others/placeholder-image.png';
+import useChangeImage from '../../hooks/useChangeImage';
 
 
 interface AdminCategoryCardProps {
@@ -27,8 +28,8 @@ interface AdminCategoryCardProps {
 const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandler, cancelHandler, saveHandler, deleteHandler, editable = false}): ReactElement => {
   const [name, setName] = useState(category.name);
 
-  const [imageFile, setImageFile] = useState<string>();
   const imageRef = useRef<HTMLImageElement>(null);
+  const [imageFile, changeImageHandler] = useChangeImage(imageRef);
 
   const changeNameHandler = (e: SyntheticEvent<HTMLInputElement>): void => {
     const target = e.target as HTMLInputElement;
@@ -37,28 +38,6 @@ const AdminCategoryCard: FC<AdminCategoryCardProps> = ({category, clickEditHandl
 
   const clickSaveHandler = (): void => {
     saveHandler({id: category.id, name, imageFile});
-  }
-
-  const changeImageHandler = (e: SyntheticEvent<HTMLInputElement>): void => {
-    const target = e.target as HTMLInputElement;
-    if (!target.files || target.files.length === 0) {
-      return
-    }
-
-    const reader = new FileReader();
-    reader.onload = (evt): void => {
-      const image = imageRef.current;
-      if (image) {
-        if (evt.target && typeof evt.target.result === 'string') {
-          image.src = evt.target.result;
-          setImageFile(evt.target.result);
-        }
-      }
-    }
-
-    if (target.files) {
-      reader.readAsDataURL(target.files[0]);
-    }
   }
 
   const clickDeleteHandler = () => {
