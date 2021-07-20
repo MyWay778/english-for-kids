@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useRef, useState } from 'react';
 import clsx from 'clsx';
 import './game-card.scss';
 import LoopIcon from '../icons/LoopIcon';
+import imagePlaceholder from '../../static/images/others/placeholder-image.png';
 
 interface WordCardProps {
   spelling: string;
@@ -77,7 +78,7 @@ const GameCard: FC<WordCardProps> = ({
                 'game-card__img',
                 isGameMode && 'game-card__img_full-height'
               )}
-              src={imageSrc}
+              src={imageSrc || imagePlaceholder}
               alt={spelling}
             />
             <div

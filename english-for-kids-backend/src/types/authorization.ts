@@ -19,5 +19,5 @@ export interface ResultType {
 }
 
 export enum AuthorizationConst {
-  AUTH_TOKEN= 'AuthToken',
+  AUTH_TOKEN = 'AuthToken',
 }

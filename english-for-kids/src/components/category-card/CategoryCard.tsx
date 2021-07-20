@@ -17,10 +17,10 @@ const CategoryCard: FC<CategoryCardProps> = ({
   imageSrc,
   isGameMode,
 }): ReactElement => {
-  const {changeCategory} = useActions();
+  const { changeCategory } = useActions();
   const categoryClickHandler = (): void => {
-    changeCategory({id, name});
-  }
+    changeCategory({ id, name });
+  };
 
   return (
     <div className="category-card">

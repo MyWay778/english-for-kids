@@ -10,7 +10,7 @@ export const rootReducer = combineReducers({
   game: gameReducer,
   auth: authReducer,
   wordsStat: wordsStatReducer,
-  adminPanel: adminPanelReducer
+  adminPanel: adminPanelReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

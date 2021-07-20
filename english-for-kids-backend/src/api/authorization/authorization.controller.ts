@@ -12,8 +12,8 @@ export default class AuthorizationController {
     req: express.Request<{}, {}, RequestAuthUserType>,
     res: express.Response
   ) {
-    const { login, password } = req.body;
-    
+    const {login, password} = req.body;
+
     if (!login) {
       const authToken = req.cookies[AuthorizationConst.AUTH_TOKEN];
       if (authToken) {
@@ -50,16 +50,16 @@ export default class AuthorizationController {
         sameSite: 'none',
         secure: true,
       });
-      res.json({ result: 'success', name: user.name, role: user.role });
+      res.json({result: 'success', name: user.name, role: user.role});
     } catch (e) {
-      res.status(401).json({ error: e.message });
+      res.status(401).json({error: e.message});
     }
   }
 
   static async identify(req: express.Request, res: express.Response) {
     const user = req.user;
     if (user) {
-      res.json({ result: 'success', name: user.name, role: user.role });
+      res.json({result: 'success', name: user.name, role: user.role});
       return;
     }
     res.sendStatus(401);

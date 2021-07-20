@@ -4,12 +4,11 @@ import authActionCreators from './auth';
 import wordsStatActionCreators from './wordsStat';
 import adminPanelActionCreators from './adminPanel';
 
-type ActionCreators =
-  typeof appActionCreators
-  & typeof gameActionCreators
-  & typeof authActionCreators
-  & typeof wordsStatActionCreators
-  & typeof adminPanelActionCreators;
+type ActionCreators = typeof appActionCreators &
+  typeof gameActionCreators &
+  typeof authActionCreators &
+  typeof wordsStatActionCreators &
+  typeof adminPanelActionCreators;
 
 export type ActionsCreatorType = {
   [K in keyof ActionCreators]: ActionCreators[K];

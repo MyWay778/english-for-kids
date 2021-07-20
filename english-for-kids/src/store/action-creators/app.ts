@@ -1,9 +1,5 @@
 import { Dispatch } from 'react';
-import {
-  AppStateActions,
-  AppStateActionTypes,
-  UserLoginDataType,
-} from '../../types/app';
+import { AppStateActions, AppStateActionTypes } from '../../types/app';
 
 const openAsideMenu =
   () =>
@@ -37,7 +33,6 @@ const setIsOpenModal =
       payload: isOpened,
     });
   };
-
 
 const appActionCreators = {
   openAsideMenu,

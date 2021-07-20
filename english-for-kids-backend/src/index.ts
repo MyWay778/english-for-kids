@@ -12,7 +12,10 @@ export const baseURL = urls.local;
 
 app.listen(port, () => {
   console.log(`Listening on the port ${port}`);
-  MongoClient.connect(urls.mongo).catch(e => {console.log(e.stack); process.exit(1)}).then(async conn => {
+  MongoClient.connect(urls.mongo).catch(e => {
+    console.log(e.stack);
+    process.exit(1)
+  }).then(async conn => {
     await AuthorizationDAO.injectDB(conn);
     console.log('Connected to DB');
   });

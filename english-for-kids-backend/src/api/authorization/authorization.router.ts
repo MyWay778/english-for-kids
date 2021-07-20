@@ -1,7 +1,7 @@
-import express, { Router } from 'express';
+import express, {Router} from 'express';
 import authenticateByToken from '../../middleware/authenticateByToken';
 import AuthorizationController from './authorization.controller';
- 
+
 const authorizationRouter = Router();
 
 authorizationRouter.route('/')

@@ -15,8 +15,11 @@ import Game from './pages/game-page';
 import GameResult from './pages/game-result';
 
 const App: FC = (): ReactElement => {
-  const {isOpenModal, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
-  const {identify} = useActions();
+  const { isOpenModal, user } = useTypedSelector((state) => ({
+    ...state.app,
+    ...state.auth,
+  }));
+  const { identify } = useActions();
 
   useEffect(() => {
     identify();
@@ -26,25 +29,31 @@ const App: FC = (): ReactElement => {
     <BrowserRouter>
       <Header />
       <AsideMenu />
-      { isOpenModal && <Modal>
-        <LoginForm/>
-      </Modal>}
+      {isOpenModal && (
+        <Modal>
+          <LoginForm />
+        </Modal>
+      )}
       <main className="main">
         <Switch>
           <Route exact path="/">
-            <ChooseCategory/>
+            <ChooseCategory />
           </Route>
           <Route path="/cards">
             <Game />
           </Route>
           <Route exact path="/result">
-            <GameResult/>
+            <GameResult />
           </Route>
-          <Route exact path="/statistic" component={StatisticPage}/>
-          {user?.role === 'admin' ? <Route  path="/admin" component={AdminPage}/> : <Redirect to="/"/>}
+          <Route exact path="/statistic" component={StatisticPage} />
+          {user?.role === 'admin' ? (
+            <Route path="/admin" component={AdminPage} />
+          ) : (
+            <Redirect to="/" />
+          )}
         </Switch>
       </main>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 };

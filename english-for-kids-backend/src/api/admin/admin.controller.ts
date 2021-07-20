@@ -5,7 +5,6 @@ import {CategoryType} from '../../types/categories';
 import {baseURL} from '../../index';
 import writeImageLocal from '../../helpers/writeImageLocal';
 
-
 export default class AdminController {
   static async getCategories(req: express.Request, res: express.Response) {
     const user = req.user;
@@ -37,7 +36,7 @@ export default class AdminController {
 
     if (newCategoryData.imageFile) {
       try {
-        const imageUrl = await writeImageLocal(newCategoryData.imageFile, `category-${newCategoryData.name}`);
+        const imageUrl = await writeImageLocal(newCategoryData.imageFile, `category-${newCategoryData.name}-edit-${Math.random()}`);
         newCategoryData.imageFile = imageUrl;
       } catch (e) {
         console.log(e);
@@ -60,7 +59,8 @@ export default class AdminController {
 
       if (newWordData.imageFile) {
         try {
-          const imageUrl = await writeImageLocal(newWordData.imageFile, `category-${newWordData.spelling}`);
+          console.log(newWordData.imageFile);
+          const imageUrl = await writeImageLocal(newWordData.imageFile, `category-${newWordData.spelling}-${newWordData.imageFile.slice(24, 29)}`);
           newWordData.imageFile = imageUrl;
         } catch (e) {
           console.log(e);
@@ -139,7 +139,6 @@ export default class AdminController {
 
     if (file) {
       const url = `${baseURL}/resources/audio/${file.filename}`;
-      console.log('FILE ', file);
       try {
         const updatedWord = await CategoriesDAO.updateWordAudio(Number(categoryId), Number(wordId), url);
 

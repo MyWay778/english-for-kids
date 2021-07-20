@@ -6,24 +6,24 @@ let userCollection: Collection<UserType>;
 
 export default class AuthorizationDAO {
   static async injectDB(conn: MongoClient): Promise<void> {
-    if(userCollection) {
+    if (userCollection) {
       return;
     }
     try {
       userCollection = await conn.db('english-for-kids').collection('users');
-    }catch(e) {
+    } catch (e) {
       console.log(`Unable to establish a collection handle in AuthorizationDAO: ${e}`)
     }
   }
 
   static async findUser(user: RequestAuthUserType): Promise<UserType> {
-      const foundUser = users.find(dataUser => dataUser.login === user.login && dataUser.password === user.password);
+    const foundUser = users.find(dataUser => dataUser.login === user.login && dataUser.password === user.password);
 
-      if (!foundUser) {
-        return Promise.reject(new Error(`User ${user.login} is not found`));
-      }
+    if (!foundUser) {
+      return Promise.reject(new Error(`User ${user.login} is not found`));
+    }
 
-      return Promise.resolve(foundUser);
+    return Promise.resolve(foundUser);
   }
 
   static async findUserFromDB(user: RequestAuthUserType): Promise<UserType> {
@@ -42,7 +42,7 @@ export default class AuthorizationDAO {
       authTokens[authToken] = user;
       return Promise.resolve({result: 'success'});
     } else {
-     return Promise.reject(new Error('Token is already exist'));
+      return Promise.reject(new Error('Token is already exist'));
     }
   }
 

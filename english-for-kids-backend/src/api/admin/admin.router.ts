@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import multer from 'multer';
-import path from 'path';
 import AdminController from './admin.controller';
 import authenticateByToken from '../../middleware/authenticateByToken';
 
@@ -11,10 +10,9 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     let extArray = file.mimetype.split("/");
     let extension = extArray[extArray.length - 1];
-    cb(null, file.fieldname + '-' + new Date().toISOString().replace(/:/g, '-')+ '.' +extension)
+    cb(null, file.fieldname + '-' + new Date().toISOString().replace(/:/g, '-') + '.' + extension)
   }
 })
-
 
 const upload = multer({storage: storage});
 

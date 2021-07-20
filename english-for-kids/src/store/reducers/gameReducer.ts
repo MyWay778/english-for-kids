@@ -1,8 +1,4 @@
-import {
-  GameActions,
-  GameActionsTypes,
-  GameState,
-} from '../../types/game';
+import { GameActions, GameActionsTypes, GameState } from '../../types/game';
 
 const initialState: GameState = {
   gameResult: null,

@@ -7,4 +7,4 @@ const playSound = (soundSrc: string, callback?: () => void): void => {
   audio.play();
 };
 
-export default  playSound;
+export default playSound;

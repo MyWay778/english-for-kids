@@ -12,7 +12,7 @@ export default class CategoriesController {
     try {
       const category = await CategoriesDAO.getCategoryById(id);
       res.json(category.words);
-    } catch(e) {
+    } catch (e) {
       res.status(404).json({error: e.message});
     }
   }

@@ -1,4 +1,4 @@
-import {FC, ReactElement} from 'react';
+import { FC, ReactElement } from 'react';
 import './styles.scss';
 
 interface IconButtonProps {
@@ -9,12 +9,19 @@ interface IconButtonProps {
   fontWeight?: 600;
 }
 
-const IconButton: FC<IconButtonProps> = ({title, iconUrl, color = 'black', fontWeight = 400, onClick}): ReactElement =>
-
+const IconButton: FC<IconButtonProps> = ({
+  title,
+  iconUrl,
+  color = 'black',
+  fontWeight = 400,
+  onClick,
+}): ReactElement => (
   <button className="icon-button" onClick={onClick}>
-    <img className="icon-button--icon" src={iconUrl} alt={title}/>
-    <span className="icon-button--title" style={{color, fontWeight}}>{title}</span>
+    <img className="icon-button--icon" src={iconUrl} alt={title} />
+    <span className="icon-button--title" style={{ color, fontWeight }}>
+      {title}
+    </span>
   </button>
-
+);
 
 export default IconButton;
