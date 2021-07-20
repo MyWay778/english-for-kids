@@ -1,4 +1,4 @@
-import {FC, ReactElement, useMemo, useState, memo} from 'react';
+import {FC, ReactElement, useState} from 'react';
 import {
   Form,
   Field,
@@ -8,7 +8,6 @@ import {
 import * as Yup from 'yup';
 import './styles.scss';
 import useActions from '../../hooks/useActions';
-import useTypedSelector from '../../hooks/useTypedSelector';
 
 interface Values {
   login: string;
@@ -92,7 +91,7 @@ const InnerForm = (props: FormikProps<Values>): ReactElement => {
 };
 
 const LoginForm: FC = (): ReactElement => {
-  const [initialLogin, setInitialLogin] = useState({login: 'admin', password: '12345'});
+  const [initialLogin, setInitialLogin] = useState({login: 'admin', password: 'admin'});
   const {authorize} = useActions();
 
   const FormikForm = withFormik<FormProps, Values>({

@@ -36,7 +36,7 @@ export default class AuthorizationController {
 
     const hashedPassword = getHashedPassword(password);
     try {
-      const user = await AuthorizationDAO.findUser({
+      const user = await AuthorizationDAO.findUserFromDB({
         login,
         password: hashedPassword,
       });
