@@ -2,10 +2,7 @@ import React, { FC, ReactElement, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header/Header';
 import AsideMenu from './components/aside-menu/AsideMenu';
-import ChooseCategoryPage from './components/choose-category-page/ChooseCategoryPage';
-import GamePage from './components/game-page/GamePage';
 import useActions from './hooks/useActions';
-import GameResultPage from './components/game-result-page/GameResultPage';
 import './styles/app.scss';
 import Footer from './components/footer';
 import StatisticPage from './pages/statistic';
@@ -13,6 +10,9 @@ import Modal from './components/modal';
 import LoginForm from './components/login-form';
 import useTypedSelector from './hooks/useTypedSelector';
 import AdminPage from './pages/admin';
+import ChooseCategory from './pages/choose-category';
+import Game from './pages/game-page';
+import GameResult from './pages/game-result';
 
 const App: FC = (): ReactElement => {
   const {isOpenModal, user} = useTypedSelector(state => ({...state.app, ...state.auth}));
@@ -32,17 +32,16 @@ const App: FC = (): ReactElement => {
       <main className="main">
         <Switch>
           <Route exact path="/">
-            <ChooseCategoryPage />
+            <ChooseCategory/>
           </Route>
           <Route path="/cards">
-            <GamePage />
+            <Game />
           </Route>
           <Route exact path="/result">
-            <GameResultPage />
+            <GameResult/>
           </Route>
           <Route exact path="/statistic" component={StatisticPage}/>
           {user?.role === 'admin' ? <Route  path="/admin" component={AdminPage}/> : <Redirect to="/"/>}
-
         </Switch>
       </main>
       <Footer/>
