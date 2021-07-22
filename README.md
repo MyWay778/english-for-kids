@@ -1,5 +1,6 @@
-## English training game  
-#### Еechnology stack
+## English-for-kids
+Pet-project, training game  
+#### Technology stack
 * TypeScript
 * React (Hooks)
 * Redux
