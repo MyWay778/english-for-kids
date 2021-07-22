@@ -1,2 +1,2 @@
-# myway778-JSFE2021Q1
-Private repository for @myway778
+English game  
+deploy: https://eloquent-shirley-c139d2.netlify.app/
