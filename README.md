@@ -16,4 +16,14 @@ I used JWT(JSON Web Token) for authorization and MongoDB for storing user data. 
 ⚠️ You need to wait for a couple of minutes to wake up Heroku 🤖 (server) and refresh the page! 
 #### Deploy: https://eloquent-shirley-c139d2.netlify.app/
 
+![english](https://user-images.githubusercontent.com/62506380/128503185-35a4cbb4-235e-454d-8c11-c6dad026ad27.png) 
+
+![english6](https://user-images.githubusercontent.com/62506380/128503389-2891e62c-9241-4492-b433-07d8f741e200.png)
+
+![english2](https://user-images.githubusercontent.com/62506380/128503189-c20fc991-fead-4590-b3d0-12df707ad138.png) 
+
+![english4](https://user-images.githubusercontent.com/62506380/128503196-dce833eb-e2fb-4ce3-812e-e1f42699c4a7.png)  
+
+
+
 
